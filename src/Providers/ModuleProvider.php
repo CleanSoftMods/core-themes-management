@@ -30,9 +30,6 @@ class ModuleProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../resources/lang' => base_path('resources/lang/vendor/webed-themes-management'),
         ], 'lang');
-        $this->publishes([
-            __DIR__ . '/../../database' => base_path('database'),
-        ], 'migrations');
     }
 
     /**

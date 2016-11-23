@@ -19,7 +19,7 @@ class RouteServiceProvider extends ServiceProvider
              * Admin routes
              */
             $router->group(['prefix' => $adminRoute], function (Router $router) use ($adminRoute, $moduleRoute) {
-                $router->group(['prefix' => $moduleRoute], function (Router $router) use ($adminRoute, $moduleRoute) {
+                $router->group(['prefix' => $moduleRoute, 'middleware' => 'has-role:super-admin'], function (Router $router) use ($adminRoute, $moduleRoute) {
                     /**
                      * Put some route here
                      */

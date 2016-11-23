@@ -30,10 +30,13 @@ class InstallModuleServiceProvider extends ServiceProvider
 
     private function booted()
     {
-        acl_permission()
+        /**
+         * Now, just super admin can modify themes
+         */
+        /*acl_permission()
             ->registerPermission('View themes', 'view-themes', $this->module)
             ->registerPermission('Add theme', 'add-themes', $this->module)
             ->registerPermission('Edit theme', 'edit-themes', $this->module)
-            ->registerPermission('Remove theme', 'remove-themes', $this->module);
+            ->registerPermission('Remove theme', 'remove-themes', $this->module);*/
     }
 }

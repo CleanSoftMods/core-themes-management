@@ -10,8 +10,6 @@ class ThemeController extends BaseAdminController
     public function __construct()
     {
         parent::__construct();
-
-        $this->middleware('has-permission:view-themes');
     }
 
     /**
@@ -124,8 +122,6 @@ class ThemeController extends BaseAdminController
 
     public function postChangeStatus($alias, $status)
     {
-        $this->middleware('has-permission:edit-themes');
-
         switch ((bool)$status) {
             case true:
                 return \ThemesManagement::enableTheme($alias)->refreshComposerAutoload();
@@ -138,8 +134,6 @@ class ThemeController extends BaseAdminController
 
     public function postInstall($alias)
     {
-        $this->middleware('has-permission:edit-themes');
-
         $module = get_theme_information($alias);
 
         if (!$module) {
@@ -155,8 +149,6 @@ class ThemeController extends BaseAdminController
 
     public function postUninstall($alias)
     {
-        $this->middleware('has-permission:edit-themes');
-
         $module = get_theme_information($alias);
 
         if (!$module) {

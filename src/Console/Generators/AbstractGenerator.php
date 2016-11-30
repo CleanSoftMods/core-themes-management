@@ -10,11 +10,10 @@ abstract class AbstractGenerator extends GeneratorCommand
     protected $moduleInformation;
 
     /**
-     * Get root folder of every modules by module type
-     * @param array $type
+     * Get root folder of every themes
      * @return string
      */
-    protected function resolveModuleRootFolder($module)
+    protected function resolveModuleRootFolder()
     {
         $path = webed_themes_path();
         if (!ends_with('/', $path)) {
@@ -37,7 +36,7 @@ abstract class AbstractGenerator extends GeneratorCommand
             die();
         }
 
-        $moduleRootFolder = $this->resolveModuleRootFolder($module);
+        $moduleRootFolder = $this->resolveModuleRootFolder();
 
         return $this->moduleInformation = array_merge($module, [
             'module-path' => $moduleRootFolder . basename(str_replace('/module.json', '', $module['file'])) . '/'

@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use WebEd\Base\ThemesManagement\Facades\ThemeOptionsSupportFacade;
 use WebEd\Base\ThemesManagement\Facades\ThemesManagementFacade;
 
 class ModuleProvider extends ServiceProvider
@@ -44,6 +45,7 @@ class ModuleProvider extends ServiceProvider
 
         $aliasLoader = AliasLoader::getInstance();
         $aliasLoader->alias('ThemesManagement', ThemesManagementFacade::class);
+        $aliasLoader->alias('ThemeOptions', ThemeOptionsSupportFacade::class);
 
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(RepositoryServiceProvider::class);

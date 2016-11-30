@@ -13,7 +13,7 @@ class RouteServiceProvider extends ServiceProvider
 
             $adminRoute = config('webed.admin_route');
 
-            $moduleRoute = 'webed-themes-management';
+            $moduleRoute = 'themes-management';
 
             /**
              * Admin routes
@@ -29,6 +29,13 @@ class RouteServiceProvider extends ServiceProvider
 
                     $router->post('install/{module}', 'ThemeController@postInstall')->name('admin::themes.install.post');
                     $router->post('uninstall/{module}', 'ThemeController@postUninstall')->name('admin::themes.uninstall.post');
+                });
+                $router->group(['prefix' => 'theme-options', 'middleware' => 'has-role:super-admin'], function (Router $router) use ($adminRoute, $moduleRoute) {
+                    /**
+                     * Put some route here
+                     */
+                    $router->get('', 'ThemeOptionController@getIndex')->name('admin::theme-options.index.get');
+                    $router->post('', 'ThemeOptionController@postIndex')->name('admin::theme-options.index.post');
                 });
             });
         });

@@ -45,10 +45,22 @@ class BootstrapModuleServiceProvider extends ServiceProvider
             'link' => route('admin::themes.index.get'),
             'css_class' => null,
         ]);
+        if(get_current_theme()) {
+            \DashboardMenu::registerItem([
+                'id' => 'webed-theme-options',
+                'piority' => 1002,
+                'parent_id' => null,
+                'heading' => null,
+                'title' => 'Theme options',
+                'font_icon' => 'icon-settings',
+                'link' => route('admin::theme-options.index.get'),
+                'css_class' => null,
+            ]);
+        }
 
         cms_settings()
             ->addSettingField('top_menu', [
-                'group' => 'theme-options',
+                'group' => 'basic',
                 'type' => 'select',
                 'piority' => 3,
                 'label' => 'Select the top menu of site',

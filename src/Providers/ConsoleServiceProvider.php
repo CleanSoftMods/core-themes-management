@@ -31,6 +31,7 @@ class ConsoleServiceProvider extends ServiceProvider
             \WebEd\Base\ThemesManagement\Console\Generators\MakeTheme::class,
             \WebEd\Base\ThemesManagement\Console\Generators\MakeController::class,
             \WebEd\Base\ThemesManagement\Console\Generators\MakeView::class,
+            \WebEd\Base\ThemesManagement\Console\Generators\MakeProvider::class,
             \WebEd\Base\ThemesManagement\Console\Generators\MakeCommand::class,
         ]);
     }
@@ -42,6 +43,7 @@ class ConsoleServiceProvider extends ServiceProvider
             \WebEd\Base\ThemesManagement\Console\Commands\DisableThemeCommand::class,
             \WebEd\Base\ThemesManagement\Console\Commands\InstallThemeCommand::class,
             \WebEd\Base\ThemesManagement\Console\Commands\UninstallThemeCommand::class,
+            \WebEd\Base\ThemesManagement\Console\Commands\GetAllThemesCommand::class,
         ]);
     }
 }

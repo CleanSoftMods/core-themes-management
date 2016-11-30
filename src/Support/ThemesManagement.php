@@ -31,19 +31,13 @@ class ThemesManagement
         if (!$theme) {
             throw new \RuntimeException('Theme not found: ' . $alias);
         }
-        $file = $theme['file'];
-        unset($theme['file']);
-        unset($theme['type']);
-
-        /**
-         * Enable this theme
-         */
-        $theme['enabled'] = true;
 
         /**
          * Save theme information
          */
-        \File::put($file, json_encode_pretify($theme));
+        save_theme_information($theme, [
+            'enabled' => true
+        ]);
 
         $this->modifyModuleAutoload($alias, false);
 
@@ -67,19 +61,13 @@ class ThemesManagement
         if (!$theme) {
             throw new \RuntimeException('Theme not found: ' . $alias);
         }
-        $file = $theme['file'];
-        unset($theme['file']);
-        unset($theme['type']);
-
-        /**
-         * Disable this theme
-         */
-        $theme['enabled'] = false;
 
         /**
          * Save theme information
          */
-        \File::put($file, json_encode_pretify($theme));
+        save_theme_information($theme, [
+            'enabled' => false
+        ]);
 
         $this->modifyModuleAutoload($alias, true);
 
@@ -137,7 +125,7 @@ class ThemesManagement
         /**
          * Save file
          */
-        \File::put(base_path('composer.json'), json_encode_pretify($composerContent));
+        \File::put(base_path('composer.json'), json_encode_prettify($composerContent));
 
         return $this;
     }

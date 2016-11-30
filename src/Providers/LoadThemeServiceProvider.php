@@ -29,6 +29,16 @@ class LoadThemeServiceProvider extends ServiceProvider
      */
     public function register()
     {
+
+    }
+
+    /**
+     * Callback when app booted
+     *
+     * @return void
+     */
+    private function booted()
+    {
         $this->currentTheme = \ThemesManagement::getCurrentTheme();
         if(!$this->currentTheme) {
             $this->themeLoaded = true;
@@ -40,15 +50,7 @@ class LoadThemeServiceProvider extends ServiceProvider
             $this->app->register($this->themeProvider);
             $this->themeLoaded = true;
         }
-    }
 
-    /**
-     * Callback when app booted
-     *
-     * @return void
-     */
-    private function booted()
-    {
         if (!$this->themeLoaded) {
             /**
              * Use hook here
@@ -59,7 +61,9 @@ class LoadThemeServiceProvider extends ServiceProvider
                     'This theme <b>' . array_get($this->currentTheme, 'name') . '</b> 
                     is enabled, but class not found: ' . $this->themeProvider . '. 
                     Please review and add the namespace of this theme to composer autoload section, then run 
-                    <a href="' . route('admin::system.commands.composer-dump-autoload.get') . '"><b>composer dump-autoload</b></a>',
+                    <a href="' . route('admin::system.commands.composer-dump-autoload.get') . '">
+                    <b>composer dump-autoload</b>
+                    </a>',
                     'error',
                     false
                 );

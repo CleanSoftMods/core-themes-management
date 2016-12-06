@@ -9,35 +9,7 @@ class RouteServiceProvider extends ServiceProvider
 
     public function map(Router $router)
     {
-        $router->group(['namespace' => $this->namespace, 'middleware' => 'web'], function (Router $router) {
-
-            $adminRoute = config('webed.admin_route');
-
-            $moduleRoute = 'themes-management';
-
-            /**
-             * Admin routes
-             */
-            $router->group(['prefix' => $adminRoute], function (Router $router) use ($adminRoute, $moduleRoute) {
-                $router->group(['prefix' => $moduleRoute, 'middleware' => 'has-role:super-admin'], function (Router $router) use ($adminRoute, $moduleRoute) {
-                    /**
-                     * Put some route here
-                     */
-                    $router->get('', 'ThemeController@getIndex')->name('admin::themes.index.get');
-                    $router->post('', 'ThemeController@postListing')->name('admin::themes.index.post');
-                    $router->post('change-status/{module}/{status}', 'ThemeController@postChangeStatus')->name('admin::themes.change-status.post');
-
-                    $router->post('install/{module}', 'ThemeController@postInstall')->name('admin::themes.install.post');
-                    $router->post('uninstall/{module}', 'ThemeController@postUninstall')->name('admin::themes.uninstall.post');
-                });
-                $router->group(['prefix' => 'theme-options', 'middleware' => 'has-role:super-admin'], function (Router $router) use ($adminRoute, $moduleRoute) {
-                    /**
-                     * Put some route here
-                     */
-                    $router->get('', 'ThemeOptionController@getIndex')->name('admin::theme-options.index.get');
-                    $router->post('', 'ThemeOptionController@postIndex')->name('admin::theme-options.index.post');
-                });
-            });
-        });
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');
     }
 }

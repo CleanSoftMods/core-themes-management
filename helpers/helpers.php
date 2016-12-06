@@ -33,27 +33,29 @@ if (!function_exists('get_all_theme_information')) {
                 continue;
             }
 
-            $theme = $themeRepo->getByAlias(array_get($data, 'alias'));
+            if (\Schema::hasTable('plugins')) {
+                $theme = $themeRepo->getByAlias(array_get($data, 'alias'));
 
-            if(!$theme) {
-                $result = $themeRepo
-                    ->editWithValidate(0, [
-                        'alias' => array_get($data, 'alias'),
-                        'enabled' => false,
-                        'installed' => false,
-                    ], true, true);
-                /**
-                 * Everything ok
-                 */
-                if(!$result['error']) {
-                    $theme = $result['data'];
+                if(!$theme) {
+                    $result = $themeRepo
+                        ->editWithValidate(0, [
+                            'alias' => array_get($data, 'alias'),
+                            'enabled' => false,
+                            'installed' => false,
+                        ], true, true);
+                    /**
+                     * Everything ok
+                     */
+                    if(!$result['error']) {
+                        $theme = $result['data'];
+                    }
                 }
-            }
 
-            if ($theme) {
-                $data['enabled'] = !!$theme->enabled;
-                $data['installed'] = !!$theme->installed;
-                $data['id'] = $theme->id;
+                if ($theme) {
+                    $data['enabled'] = !!$theme->enabled;
+                    $data['installed'] = !!$theme->installed;
+                    $data['id'] = $theme->id;
+                }
             }
 
             $modulesArr[array_get($data, 'namespace')] = array_merge($data, [

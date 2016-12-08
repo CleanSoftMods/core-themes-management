@@ -36,7 +36,7 @@ if (!function_exists('get_all_theme_information')) {
             if (\Schema::hasTable('plugins')) {
                 $theme = $themeRepo->getByAlias(array_get($data, 'alias'));
 
-                if(!$theme) {
+                if (!$theme) {
                     $result = $themeRepo
                         ->editWithValidate(0, [
                             'alias' => array_get($data, 'alias'),
@@ -46,7 +46,7 @@ if (!function_exists('get_all_theme_information')) {
                     /**
                      * Everything ok
                      */
-                    if(!$result['error']) {
+                    if (!$result['error']) {
                         $theme = $result['data'];
                     }
                 }
@@ -159,8 +159,8 @@ if (!function_exists('get_current_theme')) {
     function get_current_theme()
     {
         $currentTheme = collect(get_all_theme_information())
-        ->where('enabled', '=', true)
-        ->first();
+            ->where('enabled', '=', true)
+            ->first();
 
         return $currentTheme;
     }

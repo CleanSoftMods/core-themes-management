@@ -45,7 +45,7 @@ class BootstrapModuleServiceProvider extends ServiceProvider
             'link' => route('admin::themes.index.get'),
             'css_class' => null,
         ]);
-        if(get_current_theme()) {
+        if (cms_theme_options()->getOptionsCount()) {
             \DashboardMenu::registerItem([
                 'id' => 'webed-theme-options',
                 'piority' => 1002,

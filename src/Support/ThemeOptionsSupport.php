@@ -25,6 +25,11 @@ class ThemeOptionsSupport
 
     private $options;
 
+    /**
+     * @var int
+     */
+    private $optionsCount = 0;
+
     public function __construct()
     {
         $this->currentTheme = get_current_theme();
@@ -120,6 +125,8 @@ class ThemeOptionsSupport
             'helper' => array_get($options, 'helper'),
         ];
 
+        $this->optionsCount++;
+
         return $this;
     }
 
@@ -162,5 +169,13 @@ class ThemeOptionsSupport
     public function getCurrentTheme()
     {
         return $this->currentTheme;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOptionsCount()
+    {
+        return $this->optionsCount;
     }
 }

@@ -51,7 +51,7 @@ class LoadThemeServiceProvider extends ServiceProvider
             $this->themeLoaded = true;
         }
 
-        if (!$this->themeLoaded) {
+        if (!$this->themeLoaded && !app()->runningInConsole()) {
             /**
              * Use hook here
              * Show the error messages

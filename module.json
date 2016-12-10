@@ -1,0 +1,9 @@
+{
+    "alias": "webed-themes-management",
+    "name": "WebEd Themes Management",
+    "author": "Tedozi Manson",
+    "description": "Themes management package.",
+    "namespace": "WebEd\\Base\\ThemesManagement",
+    "version": "2.0.9",
+    "autoload": "psr-4"
+}

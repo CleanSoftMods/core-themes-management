@@ -1,9 +1,9 @@
 <?php namespace DummyNamespace\Http\Controllers;
 
-use WebEd\Plugins\Pages\Models\Contracts\PageModelContract;
-use WebEd\Plugins\Pages\Models\EloquentPage;
-use WebEd\Plugins\Pages\Repositories\Contracts\PageContract;
-use WebEd\Plugins\Pages\Repositories\PageRepository;
+use WebEd\Base\Pages\Models\Contracts\PageModelContract;
+use WebEd\Base\Pages\Models\EloquentPage;
+use WebEd\Base\Pages\Repositories\Contracts\PageContract;
+use WebEd\Base\Pages\Repositories\PageRepository;
 
 class PageController extends AbstractController
 {
@@ -26,6 +26,8 @@ class PageController extends AbstractController
     public function handle(PageModelContract $item, array $data)
     {
         $this->dis = $data;
+
+        $this->getMenu('page', $item->id);
 
         $happyMethod = '_template_' . studly_case($item->page_template);
 

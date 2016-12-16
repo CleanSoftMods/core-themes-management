@@ -1,6 +1,6 @@
 <?php namespace WebEd\Base\ThemesManagement\Support;
 
-use App\Http\Controllers\AbstractController;
+use WebEd\Base\Core\Http\Controllers\BaseFrontController;
 
 class ThemesManagement
 {
@@ -132,7 +132,7 @@ class ThemesManagement
 
     public function refreshComposerAutoload()
     {
-        return \ModulesManagement::refreshComposerAutoload();
+        return modules_management()->refreshComposerAutoload();
     }
 
     /**
@@ -145,7 +145,7 @@ class ThemesManagement
 
     /**
      * @var string $controllerName
-     * @return AbstractController|null
+     * @return BaseFrontController|null
      */
     public function getThemeController($controllerName)
     {

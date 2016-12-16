@@ -19,15 +19,17 @@ class ModuleProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
 
         $this->publishes([
-            __DIR__ . '/../../resources/assets' => resource_path('assets'),
-            __DIR__ . '/../../resources/public' => public_path(),
-        ], 'webed-assets');
-        $this->publishes([
             __DIR__ . '/../../resources/views' => config('view.paths')[0] . '/vendor/DummyAlias',
         ], 'views');
         $this->publishes([
             __DIR__ . '/../../resources/lang' => base_path('resources/lang/vendor/DummyAlias'),
         ], 'lang');
+        $this->publishes([
+            __DIR__ . '/../../resources/assets' => resource_path('assets'),
+        ], 'webed-assets');
+        $this->publishes([
+            __DIR__ . '/../../resources/public' => public_path(),
+        ], 'webed-public-assets');
     }
 
     /**

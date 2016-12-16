@@ -33,7 +33,7 @@ class DisableThemeCommand extends Command
      */
     public function handle()
     {
-        \ThemesManagement::disableTheme($this->argument('alias'))->refreshComposerAutoload();
+        themes_management()->disableTheme($this->argument('alias'))->refreshComposerAutoload();
 
         $this->info("Your theme disabled successfully.");
     }

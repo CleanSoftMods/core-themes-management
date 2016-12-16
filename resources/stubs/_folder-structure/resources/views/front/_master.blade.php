@@ -7,13 +7,14 @@
 <html lang="en">
 <!--<![endif]-->
 <head>
-    <meta charset="utf-8"/>
     <title>{{ $pageTitle or '' }} - {{ get_settings('site_title', 'WebEd') ?: 'WebEd' }}</title>
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta content="{{ $pageTitle or '' }} - {{ get_settings('site_title', 'WebEd') ?: 'WebEd' }}" name="description"/>
-    <meta content="" name="author"/>
+
+    {!! seo()->render() !!}
 
     <base href="{{ asset('') }}">
 
@@ -21,8 +22,6 @@
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     @php do_action('front_header_css') @endphp
     @yield('css')
-
-    <link rel="shortcut icon" href="{{ asset(get_settings('favicon')) }}"/>
 
     @php do_action('front_header_js') @endphp
 </head>

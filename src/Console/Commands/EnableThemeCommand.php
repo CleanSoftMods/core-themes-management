@@ -33,7 +33,7 @@ class EnableThemeCommand extends Command
      */
     public function handle()
     {
-        \ThemesManagement::enableTheme($this->argument('alias'))->refreshComposerAutoload();
+        themes_management()->enableTheme($this->argument('alias'))->refreshComposerAutoload();
 
         $this->info("Your theme enabled successfully.");
     }

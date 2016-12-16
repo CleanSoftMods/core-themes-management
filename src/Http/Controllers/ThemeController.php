@@ -124,10 +124,10 @@ class ThemeController extends BaseAdminController
     {
         switch ((bool)$status) {
             case true:
-                return \ThemesManagement::enableTheme($alias)->refreshComposerAutoload();
+                return themes_management()->enableTheme($alias)->refreshComposerAutoload();
                 break;
             default:
-                return \ThemesManagement::disableTheme($alias)->refreshComposerAutoload();
+                return themes_management()->disableTheme($alias)->refreshComposerAutoload();
                 break;
         }
     }

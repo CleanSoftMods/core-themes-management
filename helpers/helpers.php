@@ -169,3 +169,13 @@ if (!function_exists('get_current_theme')) {
         return $currentTheme;
     }
 }
+
+if (!function_exists('themes_management')) {
+    /**
+     * @return \WebEd\Base\ThemesManagement\Support\ThemesManagement
+     */
+    function themes_management()
+    {
+        return \WebEd\Base\ThemesManagement\Facades\ThemesManagementFacade::getFacadeRoot();
+    }
+}

@@ -24,6 +24,8 @@ class CategoryController extends AbstractController
     {
         $this->dis = $data;
 
+        $this->getMenu('category', $item->id);
+
         $happyMethod = '_template_' . studly_case($item->page_template);
 
         if(method_exists($this, $happyMethod)) {

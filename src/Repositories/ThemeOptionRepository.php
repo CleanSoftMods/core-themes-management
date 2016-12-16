@@ -61,7 +61,7 @@ class ThemeOptionRepository extends AbstractBaseRepository implements ThemeOptio
                 return $result;
             }
         }
-        return $this->setMessages('Options updated', false, $this::SUCCESS_NO_CONTENT_CODE);
+        return $this->setMessages('Options updated', false, \Constants::SUCCESS_NO_CONTENT_CODE);
     }
 
     /**
@@ -73,7 +73,7 @@ class ThemeOptionRepository extends AbstractBaseRepository implements ThemeOptio
     {
         $currentTheme = cms_theme_options()->getCurrentTheme();
         if (!$currentTheme) {
-            return $this->setMessages('No theme activated!!!', true, $this::ERROR_CODE);
+            return $this->setMessages('No theme activated!!!', true, \Constants::ERROR_CODE);
         }
 
         $allowCreateNew = true;
@@ -104,12 +104,12 @@ class ThemeOptionRepository extends AbstractBaseRepository implements ThemeOptio
         ], $allowCreateNew, $justUpdateSomeFields);
 
         if ($result['error']) {
-            return $this->setMessages($result['messages'], true, $this::ERROR_CODE, [
+            return $this->setMessages($result['messages'], true, \Constants::ERROR_CODE, [
                 'key' => $key,
                 'value' => $value
             ]);
         }
 
-        return $this->setMessages('Options updated', false, $this::SUCCESS_NO_CONTENT_CODE);
+        return $this->setMessages('Options updated', false, \Constants::SUCCESS_NO_CONTENT_CODE);
     }
 }

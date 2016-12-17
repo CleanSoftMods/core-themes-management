@@ -51,7 +51,7 @@ class UninstallThemeCommand extends Command
     public function handle()
     {
         $theme = get_theme_information($this->argument('alias'));
-        if(!$theme) {
+        if (!$theme) {
             $this->error('Theme not exists');
             die();
         }
@@ -65,13 +65,12 @@ class UninstallThemeCommand extends Command
     protected function registerUninstallModuleService($theme)
     {
         $namespace = str_replace('\\\\', '\\', array_get($theme, 'namespace', '') . '\Providers\UninstallModuleServiceProvider');
-        if(class_exists($namespace)) {
+        if (class_exists($namespace)) {
             $this->app->register($namespace);
-            save_theme_information($theme, [
-                'installed' => false
-            ]);
-        } else {
-            $this->line('Nothing to uninstall');
         }
+        save_theme_information($theme, [
+            'installed' => false
+        ]);
+        $this->line('Uninstalled');
     }
 }

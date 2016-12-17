@@ -51,7 +51,7 @@ class InstallThemeCommand extends Command
     public function handle()
     {
         $theme = get_theme_information($this->argument('alias'));
-        if(!$theme) {
+        if (!$theme) {
             $this->error('Theme not exists');
             die();
         }
@@ -65,20 +65,19 @@ class InstallThemeCommand extends Command
     protected function registerInstallModuleService($theme)
     {
         $namespace = str_replace('\\\\', '\\', array_get($theme, 'namespace', '') . '\Providers\InstallModuleServiceProvider');
-        if(class_exists($namespace)) {
+        if (class_exists($namespace)) {
             $this->app->register($namespace);
-            /**
-             * Publish theme assets
-             */
-            \Artisan::call('vendor:publish', [
-                '--provider' => str_replace('\\\\', '\\', array_get($theme, 'namespace', '') . '\Providers\ModuleProvider'),
-                '--tag' => 'webed-public-assets',
-            ]);
-            save_theme_information($theme, [
-                'installed' => true,
-            ]);
-        } else {
-            $this->line('Nothing to install');
         }
+        /**
+         * Publish theme assets
+         */
+        \Artisan::call('vendor:publish', [
+            '--provider' => str_replace('\\\\', '\\', array_get($theme, 'namespace', '') . '\Providers\ModuleProvider'),
+            '--tag' => 'webed-public-assets',
+        ]);
+        save_theme_information($theme, [
+            'installed' => true,
+        ]);
+        $this->line('Installed');
     }
 }

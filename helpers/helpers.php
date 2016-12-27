@@ -11,6 +11,16 @@ if (!function_exists('webed_themes_path')) {
     }
 }
 
+if (!function_exists('themes_management')) {
+    /**
+     * @return \WebEd\Base\ThemesManagement\Support\ThemesManagement
+     */
+    function themes_management()
+    {
+        return \WebEd\Base\ThemesManagement\Facades\ThemesManagementFacade::getFacadeRoot();
+    }
+}
+
 if (!function_exists('get_all_theme_information')) {
     /**
      * @return array
@@ -79,7 +89,7 @@ if (!function_exists('get_theme_information')) {
      */
     function get_theme_information($alias)
     {
-        return collect(get_all_theme_information())
+        return themes_management()->getAllThemesInformation()
             ->where('alias', '=', $alias)
             ->first();
     }
@@ -92,7 +102,7 @@ if (!function_exists('theme_exists')) {
      */
     function theme_exists($alias)
     {
-        return !!collect(get_all_theme_information())
+        return !!themes_management()->getAllThemesInformation()
             ->where('alias', '=', $alias)
             ->first();
     }
@@ -162,20 +172,10 @@ if (!function_exists('get_current_theme')) {
      */
     function get_current_theme()
     {
-        $currentTheme = collect(get_all_theme_information())
+        $currentTheme = themes_management()->getAllThemesInformation()
             ->where('enabled', '=', true)
             ->first();
 
         return $currentTheme;
-    }
-}
-
-if (!function_exists('themes_management')) {
-    /**
-     * @return \WebEd\Base\ThemesManagement\Support\ThemesManagement
-     */
-    function themes_management()
-    {
-        return \WebEd\Base\ThemesManagement\Facades\ThemesManagementFacade::getFacadeRoot();
     }
 }

@@ -161,4 +161,12 @@ class ThemesManagement
             return null;
         }
     }
+
+    /**
+     * @return array|\Illuminate\Support\Collection
+     */
+    public function getAllThemesInformation()
+    {
+        return $this->themes;
+    }
 }

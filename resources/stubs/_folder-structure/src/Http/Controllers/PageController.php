@@ -1,7 +1,7 @@
 <?php namespace DummyNamespace\Http\Controllers;
 
 use WebEd\Base\Pages\Models\Contracts\PageModelContract;
-use WebEd\Base\Pages\Models\EloquentPage;
+use WebEd\Base\Pages\Models\Page;
 use WebEd\Base\Pages\Repositories\Contracts\PageContract;
 use WebEd\Base\Pages\Repositories\PageRepository;
 
@@ -20,7 +20,7 @@ class PageController extends AbstractController
     }
 
     /**
-     * @param EloquentPage $item
+     * @param Page $item
      * @param array $data
      */
     public function handle(PageModelContract $item, array $data)
@@ -39,7 +39,7 @@ class PageController extends AbstractController
     }
 
     /**
-     * @param EloquentPage $page
+     * @param Page $page
      * @return mixed
      */
     protected function defaultTemplate(PageModelContract $page)

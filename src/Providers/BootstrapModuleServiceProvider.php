@@ -44,6 +44,7 @@ class BootstrapModuleServiceProvider extends ServiceProvider
             'font_icon' => 'icon-magic-wand',
             'link' => route('admin::themes.index.get'),
             'css_class' => null,
+            'permissions' => ['view-themes'],
         ]);
         if (cms_theme_options()->getOptionsCount()) {
             \DashboardMenu::registerItem([

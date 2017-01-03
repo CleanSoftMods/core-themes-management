@@ -37,7 +37,7 @@ class BootstrapModuleServiceProvider extends ServiceProvider
          */
         \DashboardMenu::registerItem([
             'id' => 'webed-themes-management',
-            'piority' => 1002,
+            'priority' => 1002,
             'parent_id' => null,
             'heading' => null,
             'title' => 'Themes',
@@ -49,7 +49,7 @@ class BootstrapModuleServiceProvider extends ServiceProvider
         if (cms_theme_options()->getOptionsCount()) {
             \DashboardMenu::registerItem([
                 'id' => 'webed-theme-options',
-                'piority' => 1002,
+                'priority' => 1002,
                 'parent_id' => null,
                 'heading' => null,
                 'title' => 'Theme options',
@@ -63,7 +63,7 @@ class BootstrapModuleServiceProvider extends ServiceProvider
             ->addSettingField('top_menu', [
                 'group' => 'basic',
                 'type' => 'select',
-                'piority' => 3,
+                'priority' => 3,
                 'label' => 'Select the top menu of site',
                 'helper' => 'Our site menu'
             ], function () {

@@ -13,7 +13,7 @@ class ThemeOptionsSupport
     private $groups = [
         'basic' => [
             'title' => 'Basic',
-            'piority' => 1,
+            'priority' => 1,
             'items' => [],
         ],
     ];
@@ -63,12 +63,12 @@ class ThemeOptionsSupport
      * @param string $groupTitle
      * @return $this
      */
-    public function addGroup($groupKey, $groupTitle, $piority = 999)
+    public function addGroup($groupKey, $groupTitle, $priority = 999)
     {
         if (!isset($this->groups[$groupKey])) {
             $this->groups[$groupKey] = [
                 'title' => $groupTitle,
-                'piority' => $piority,
+                'priority' => $priority,
                 'items' => [],
             ];
         }
@@ -107,7 +107,7 @@ class ThemeOptionsSupport
         $options = array_merge([
             'group' => 'basic',
             'type' => null,
-            'piority' => 999,
+            'priority' => 999,
             'label' => null,
             'helper' => null,
         ], $options);
@@ -119,7 +119,7 @@ class ThemeOptionsSupport
         $this->groups[$options['group']]['items'][] = [
             'name' => $name,
             'type' => $options['type'],
-            'piority' => $options['piority'],
+            'priority' => $options['priority'],
             'params' => $htmlHelpersParams,
             'label' => array_get($options, 'label'),
             'helper' => array_get($options, 'helper'),
@@ -135,10 +135,10 @@ class ThemeOptionsSupport
      */
     public function export()
     {
-        $optionGroup = collect($this->groups)->sortBy('piority')->toArray();
+        $optionGroup = collect($this->groups)->sortBy('priority')->toArray();
 
         foreach ($optionGroup as $key => $group) {
-            $optionGroup[$key]['items'] = collect($group['items'])->sortBy('piority')->toArray();
+            $optionGroup[$key]['items'] = collect($group['items'])->sortBy('priority')->toArray();
         }
 
         return collect($optionGroup);

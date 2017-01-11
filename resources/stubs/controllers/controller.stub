@@ -1,5 +1,7 @@
 <?php namespace DummyNamespace;
 
+use DummyRootNamespace\Http\Controllers\AbstractController;
+
 class DummyClass extends AbstractController
 {
     protected $module = '{alias}';

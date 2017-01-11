@@ -42,7 +42,7 @@ class MakeController extends AbstractGenerator
         $stub = str_replace([
             '{alias}',
         ], [
-            $this->argument('alias'),
+            $this->moduleInformation['alias'],
         ], $stub);
     }
 }

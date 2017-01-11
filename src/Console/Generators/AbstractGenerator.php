@@ -127,7 +127,7 @@ abstract class AbstractGenerator extends GeneratorCommand
         );
 
         $stub = str_replace(
-            'DummyRootNamespace', $this->laravel->getNamespace(), $stub
+            'DummyRootNamespace', $this->moduleInformation['namespace'], $stub
         );
 
         if (method_exists($this, 'replaceParameters')) {

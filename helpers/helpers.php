@@ -29,12 +29,21 @@ if (!function_exists('get_all_theme_information')) {
     {
         $modulesArr = [];
 
+        $canAccessDB = true;
+        if (app()->runningInConsole()) {
+            if (!check_db_connection() || !\Schema::hasTable('themes')) {
+                $canAccessDB = false;
+            }
+        }
+
         /**
          * @var \WebEd\Base\ThemesManagement\Repositories\ThemeRepository $themeRepo
          */
         $themeRepo = app(\WebEd\Base\ThemesManagement\Repositories\Contracts\ThemeRepositoryContract::class);
 
-        $themes = $themeRepo->all();
+        if ($canAccessDB) {
+            $themes = $themeRepo->all();
+        }
 
         $modules = get_folders_in_path(webed_themes_path());
 
@@ -45,10 +54,8 @@ if (!function_exists('get_all_theme_information')) {
                 continue;
             }
 
-            if (app()->runningInConsole()) {
-                if (!check_db_connection() || !\Schema::hasTable('themes')) {
-                    continue;
-                }
+            if (!$canAccessDB) {
+                continue;
             }
 
             $theme = $themes->where('alias', '=', array_get($data, 'alias'))->first();

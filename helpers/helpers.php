@@ -34,6 +34,8 @@ if (!function_exists('get_all_theme_information')) {
          */
         $themeRepo = app(\WebEd\Base\ThemesManagement\Repositories\Contracts\ThemeRepositoryContract::class);
 
+        $themes = $themeRepo->all();
+
         $modules = get_folders_in_path(webed_themes_path());
 
         foreach ($modules as $row) {
@@ -49,7 +51,7 @@ if (!function_exists('get_all_theme_information')) {
                 }
             }
 
-            $theme = $themeRepo->getByAlias(array_get($data, 'alias'));
+            $theme = $themes->where('alias', '=', array_get($data, 'alias'))->first();
 
             if (!$theme) {
                 $result = $themeRepo

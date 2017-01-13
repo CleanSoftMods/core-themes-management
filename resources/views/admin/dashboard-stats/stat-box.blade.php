@@ -7,7 +7,7 @@
         <div class="icon">
             <i class="icon-magic-wand"></i>
         </div>
-        <a href="{{ route('admin::plugins.index.get') }}" class="small-box-footer">
+        <a href="{{ route('admin::themes.index.get') }}" class="small-box-footer">
             More info <i class="fa fa-arrow-circle-right"></i>
         </a>
     </div>

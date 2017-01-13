@@ -47,6 +47,7 @@ class ModuleProvider extends ServiceProvider
         $this->app->register(RepositoryServiceProvider::class);
         $this->app->register(ConsoleServiceProvider::class);
         $this->app->register(LoadThemeServiceProvider::class);
+        $this->app->register(HookServiceProvider::class);
         $this->app->register(BootstrapModuleServiceProvider::class);
     }
 }

@@ -62,6 +62,7 @@ class MakeTheme extends Command
         $this->container['namespace'] = $this->ask('Namespace of theme:', 'WebEd\\Themes\\' . studly_case($this->container['alias']));
         $this->container['version'] = $this->ask('Theme version.', '1.0');
         $this->container['autoload'] = $this->ask('Autoloading type.', 'psr-4');
+        $this->container['require'] = new \stdClass();
 
         $this->step2();
     }

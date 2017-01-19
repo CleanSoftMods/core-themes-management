@@ -56,10 +56,23 @@ class InstallThemeCommand extends Command
             die();
         }
 
+        $this->detectRequiredDependencies($theme);
+
         $this->line('Install module dependencies...');
         $this->registerInstallModuleService($theme);
 
         $this->info("\nTheme " . $this->argument('alias') . " installed.");
+    }
+
+    protected function detectRequiredDependencies($theme)
+    {
+        $checkRelatedModules = check_module_require($theme);
+        if ($checkRelatedModules['error']) {
+            foreach ($checkRelatedModules['messages'] as $message) {
+                $this->error($message);
+            }
+            die();
+        }
     }
 
     protected function registerInstallModuleService($theme)
@@ -77,6 +90,7 @@ class InstallThemeCommand extends Command
         ]);
         save_theme_information($theme, [
             'installed' => true,
+            'installed_version' => array_get($theme, 'version'),
         ]);
         $this->line('Installed');
     }

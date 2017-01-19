@@ -42,8 +42,19 @@ class ThemeController extends BaseAdminController
 
     public function postChangeStatus($alias, $status)
     {
+        $theme = get_theme_information($alias);
+
+        if (!$theme) {
+            return response_with_messages('Theme not exists', true, \Constants::ERROR_CODE);
+        }
+
         switch ((bool)$status) {
             case true:
+                $check = check_module_require($theme);
+                if ($check['error']) {
+                    return $check;
+                }
+
                 return themes_management()->enableTheme($alias)->refreshComposerAutoload();
                 break;
             default:
@@ -54,10 +65,15 @@ class ThemeController extends BaseAdminController
 
     public function postInstall($alias)
     {
-        $module = get_theme_information($alias);
+        $theme = get_theme_information($alias);
 
-        if (!$module) {
-            return response_with_messages('Theme not exists', true, 500);
+        if (!$theme) {
+            return response_with_messages('Theme not exists', true, \Constants::ERROR_CODE);
+        }
+
+        $check = check_module_require($theme);
+        if ($check['error']) {
+            return $check;
         }
 
         \Artisan::call('theme:install', [
@@ -69,10 +85,15 @@ class ThemeController extends BaseAdminController
 
     public function postUninstall($alias)
     {
-        $module = get_theme_information($alias);
+        $theme = get_theme_information($alias);
 
-        if (!$module) {
-            return response_with_messages('Theme not exists', true, 500);
+        if (!$theme) {
+            return response_with_messages('Theme not exists', true, \Constants::ERROR_CODE);
+        }
+
+        $check = check_module_require($theme);
+        if ($check['error']) {
+            return $check;
         }
 
         \Artisan::call('theme:uninstall', [

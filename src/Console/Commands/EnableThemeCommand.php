@@ -33,8 +33,27 @@ class EnableThemeCommand extends Command
      */
     public function handle()
     {
+        $theme = get_theme_information($this->argument('alias'));
+        if (!$theme) {
+            $this->error('Theme not exists');
+            die();
+        }
+
+        $this->detectRequiredDependencies($theme);
+
         themes_management()->enableTheme($this->argument('alias'))->refreshComposerAutoload();
 
         $this->info("Your theme enabled successfully.");
+    }
+
+    protected function detectRequiredDependencies($theme)
+    {
+        $checkRelatedModules = check_module_require($theme);
+        if ($checkRelatedModules['error']) {
+            foreach ($checkRelatedModules['messages'] as $message) {
+                $this->error($message);
+            }
+            die();
+        }
     }
 }

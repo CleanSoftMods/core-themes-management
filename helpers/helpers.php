@@ -76,12 +76,14 @@ if (!function_exists('get_all_theme_information')) {
                     $data['enabled'] = !!$theme->enabled;
                     $data['installed'] = !!$theme->installed;
                     $data['id'] = $theme->id;
+                    $data['installed_version'] = $theme->installed_version;
                 }
             }
 
             $modulesArr[array_get($data, 'namespace')] = array_merge($data, [
                 'file' => $file,
                 'type' => 'themes',
+                'require' => array_get($data, 'require') && is_array(array_get($data, 'require')) ? array_get($data, 'require') : []
             ]);
         }
 

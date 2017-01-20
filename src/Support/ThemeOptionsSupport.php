@@ -174,7 +174,7 @@ class ThemeOptionsSupport
     /**
      * @return int
      */
-    public function getOptionsCount()
+    public function count()
     {
         return $this->optionsCount;
     }

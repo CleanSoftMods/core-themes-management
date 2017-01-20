@@ -1,13 +1,15 @@
-<?php namespace DummyNamespace\Http\Controllers;
+<?php namespace DummyNamespace\Http\Controllers\Pages;
 
 use WebEd\Base\Pages\Models\Contracts\PageModelContract;
 use WebEd\Base\Pages\Models\Page;
 use WebEd\Base\Pages\Repositories\Contracts\PageContract;
 use WebEd\Base\Pages\Repositories\PageRepository;
 
+use DummyNamespace\Http\Controllers\AbstractController;
+
 class PageController extends AbstractController
 {
-    protected $module = 'DummyAlias';
+    protected $module = 'cosmetics';
 
     /**
      * @param PageRepository $repository
@@ -45,5 +47,14 @@ class PageController extends AbstractController
     protected function defaultTemplate(PageModelContract $page)
     {
         return $this->view('front.page-templates.default');
+    }
+
+    /**
+     * @param Page $page
+     * @return mixed
+     */
+    protected function _template_Homepage(PageModelContract $page)
+    {
+        return $this->view('front.page-templates.homepage');
     }
 }

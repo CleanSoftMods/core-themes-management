@@ -20,7 +20,9 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
     @php do_action('front_header_css') @endphp
+
     @yield('css')
 
     @php do_action('front_header_js') @endphp
@@ -28,21 +30,29 @@
 
 <body class="{{ $bodyClass or '' }} @php do_action('front_body_class') @endphp">
 
-<div class="site-wrapper" id="site_wrapper">
-    <header class="site-header" id="header">
+<div class="wrapper" id="site_wrapper">
+    @php do_action('front_before_header_wrapper_content') @endphp
+
+    <header class="header" id="header">
         @include('webed-theme-DummyAlias::front._partials.header')
     </header>
 
-    <main class="site-main" id="main">
+    @php do_action('front_before_main_wrapper_content') @endphp
+
+    <main class="main" id="main">
         @yield('content')
     </main>
 
-    <footer class="site-footer" id="footer">
+    @php do_action('front_before_footer_wrapper_content') @endphp
+
+    <footer class="footer" id="footer">
         @include('webed-theme-DummyAlias::front._partials.footer')
     </footer>
 
-    @yield('other-content')
+    @php do_action('front_bottom_wrapper_content') @endphp
 </div>
+
+@php do_action('front_bottom_content') @endphp
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -52,8 +62,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
+
 @php do_action('front_footer_js') @endphp
+
 @yield('js')
+
 @yield('js-init')
 
 </body>

@@ -158,7 +158,7 @@ class ThemesManagement
         try {
             return app($controller);
         } catch (\Exception $exception) {
-            return null;
+            return $controller;
         }
     }
 

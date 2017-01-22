@@ -9,7 +9,7 @@ use DummyNamespace\Http\Controllers\AbstractController;
 
 class PageController extends AbstractController
 {
-    protected $module = 'cosmetics';
+    protected $module = 'DummyAlias';
 
     /**
      * @param PageRepository $repository

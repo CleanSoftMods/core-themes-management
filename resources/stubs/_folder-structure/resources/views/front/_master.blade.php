@@ -34,7 +34,7 @@
     @php do_action('front_before_header_wrapper_content') @endphp
 
     <header class="header" id="header">
-        @include('webed-theme-DummyAlias::front._partials.header')
+        @include('webed-theme::front._partials.header')
     </header>
 
     @php do_action('front_before_main_wrapper_content') @endphp
@@ -46,7 +46,7 @@
     @php do_action('front_before_footer_wrapper_content') @endphp
 
     <footer class="footer" id="footer">
-        @include('webed-theme-DummyAlias::front._partials.footer')
+        @include('webed-theme::front._partials.footer')
     </footer>
 
     @php do_action('front_bottom_wrapper_content') @endphp

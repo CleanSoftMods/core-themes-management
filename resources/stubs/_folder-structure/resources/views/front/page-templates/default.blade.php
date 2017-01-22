@@ -1,4 +1,4 @@
-@extends('webed-theme-DummyAlias::front._master')
+@extends('webed-theme::front._master')
 
 @section('content')
     <article>

@@ -7,8 +7,6 @@ use DummyNamespace\Http\Controllers\AbstractController;
 
 class CategoryController extends AbstractController
 {
-    protected $module = 'DummyAlias';
-
     /**
      * @var Category
      */

@@ -10,8 +10,6 @@ use DummyNamespace\Http\Controllers\AbstractController;
 
 class PostController extends AbstractController
 {
-    protected $module = 'DummyAlias';
-
     /**
      * @var Post
      */

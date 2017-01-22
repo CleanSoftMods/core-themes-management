@@ -9,8 +9,6 @@ use DummyNamespace\Http\Controllers\AbstractController;
 
 class TagController extends AbstractController
 {
-    protected $module = 'nongdanviet';
-
     /**
      * @var Post
      */

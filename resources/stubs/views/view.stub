@@ -1,5 +1,5 @@
-@extends('ViewExtendsFrom')
+@extends('webed-theme::front._master')
 
 @section('content')
-    {alias}
+
 @endsection

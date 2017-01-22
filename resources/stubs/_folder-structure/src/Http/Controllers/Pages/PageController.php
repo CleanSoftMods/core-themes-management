@@ -9,8 +9,6 @@ use DummyNamespace\Http\Controllers\AbstractController;
 
 class PageController extends AbstractController
 {
-    protected $module = 'DummyAlias';
-
     /**
      * @param PageRepository $repository
      */

@@ -37,6 +37,8 @@
         @include('webed-theme::front._partials.header')
     </header>
 
+    @include('webed-theme::front._partials.flash-messages')
+
     @php do_action('front_before_main_wrapper_content') @endphp
 
     <main class="main" id="main">

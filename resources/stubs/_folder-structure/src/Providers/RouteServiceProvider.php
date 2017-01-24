@@ -9,15 +9,10 @@ class RouteServiceProvider extends ServiceProvider
 
     public function map(Router $router)
     {
-        $router->group(['namespace' => $this->namespace, 'middleware' => 'web'], function (Router $router) {
-
-            $moduleRoute = 'DummyAlias';
-
-            $router->group(['prefix' => $moduleRoute], function (Router $router) use ($moduleRoute) {
-                /**
-                 * Put some route here
-                 */
-            });
+        $router->group(['middleware' => 'web'], function (Router $router) {
+            $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
         });
+
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');
     }
 }

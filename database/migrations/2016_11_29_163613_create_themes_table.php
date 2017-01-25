@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateThemeOptionsTable extends Migration
+class CreateThemesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,14 +15,16 @@ class CreateThemeOptionsTable extends Migration
     {
         Schema::create('themes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('alias')->unique();
+            $table->string('alias', 100)->unique();
             $table->tinyInteger('enabled', false, true)->default(0);
             $table->tinyInteger('installed', false, true)->default(0);
+            $table->string('installed_version', 255)->nullable();
         });
+
         Schema::create('theme_options', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('theme_id', false)->unsigned();
-            $table->string('key');
+            $table->string('key', 100);
             $table->text('value');
 
             $table->unique(['theme_id', 'key']);

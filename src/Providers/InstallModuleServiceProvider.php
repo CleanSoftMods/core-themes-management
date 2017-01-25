@@ -34,6 +34,7 @@ class InstallModuleServiceProvider extends ServiceProvider
          * Now, just super admin can modify themes
          */
         acl_permission()
-            ->registerPermission('View themes', 'view-themes', $this->module);
+            ->registerPermission('View themes', 'view-themes', $this->module)
+            ->registerPermission('Update theme options', 'update-theme-options', $this->module);
     }
 }

@@ -9,9 +9,6 @@ $adminRoute = config('webed.admin_route');
  */
 Route::group(['prefix' => $adminRoute], function (Router $router) use ($adminRoute) {
     $router->group(['prefix' => 'themes-management'], function (Router $router) use ($adminRoute) {
-        /**
-         * Put some route here
-         */
         $router->get('', 'ThemeController@getIndex')
             ->name('admin::themes.index.get')
             ->middleware('has-role:view-themes');
@@ -32,9 +29,6 @@ Route::group(['prefix' => $adminRoute], function (Router $router) use ($adminRou
             ->middleware('has-role:super-admin');
     });
     $router->group(['prefix' => 'theme-options'], function (Router $router) use ($adminRoute) {
-        /**
-         * Put some route here
-         */
         $router->get('', 'ThemeOptionController@getIndex')
             ->name('admin::theme-options.index.get');
         $router->post('', 'ThemeOptionController@postIndex')

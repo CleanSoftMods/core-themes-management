@@ -35,6 +35,7 @@ class InstallModuleServiceProvider extends ServiceProvider
          */
         acl_permission()
             ->registerPermission('View themes', 'view-themes', $this->module)
+            ->registerPermission('View theme options', 'view-theme-options', $this->module)
             ->registerPermission('Update theme options', 'update-theme-options', $this->module);
     }
 }

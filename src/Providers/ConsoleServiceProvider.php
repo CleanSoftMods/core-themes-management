@@ -42,6 +42,7 @@ class ConsoleServiceProvider extends ServiceProvider
             \WebEd\Base\ThemesManagement\Console\Commands\EnableThemeCommand::class,
             \WebEd\Base\ThemesManagement\Console\Commands\DisableThemeCommand::class,
             \WebEd\Base\ThemesManagement\Console\Commands\InstallThemeCommand::class,
+            \WebEd\Base\ThemesManagement\Console\Commands\UpdateThemeCommand::class,
             \WebEd\Base\ThemesManagement\Console\Commands\UninstallThemeCommand::class,
             \WebEd\Base\ThemesManagement\Console\Commands\GetAllThemesCommand::class,
         ]);

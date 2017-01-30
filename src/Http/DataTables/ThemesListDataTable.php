@@ -44,8 +44,9 @@ class ThemesListDataTable extends AbstractDataTables
         $this->fetch = datatable()->of($this->repository)
             ->editColumn('description', function ($item) {
                 return array_get($item, 'description') . '<br><br>'
-                . 'Author: ' . array_get($item, 'author') . '<br>'
-                . 'Version: <b>' . array_get($item, 'version', '...') . '</b>';
+                    . 'Author: ' . array_get($item, 'author') . '<br><br>'
+                    . 'Version: <b>' . array_get($item, 'version', '...') . '</b>' . '<br>'
+                    . 'Installed version: <b>' . array_get($item, 'installed_version', '...') . '</b>';
             })
             ->addColumn('thumbnail', function ($item) {
                 $themeFolder = get_base_folder($item['file']);
@@ -89,6 +90,22 @@ class ThemesListDataTable extends AbstractDataTables
                     'class' => 'btn btn-outline blue btn-sm ajax-link',
                 ]) : '';
 
+                $updateBtn = (
+                    array_get($item, 'enabled') &&
+                    array_get($item, 'installed') &&
+                    version_compare(array_get($item, 'installed_version'), array_get($item, 'version'), '<')
+                )
+                    ? form()->button('Update', [
+                        'title' => 'Update this theme',
+                        'data-ajax' => route('admin::themes.update.post', [
+                            'module' => array_get($item, 'alias'),
+                        ]),
+                        'data-method' => 'POST',
+                        'data-toggle' => 'confirmation',
+                        'class' => 'btn btn-outline purple btn-sm ajax-link',
+                    ])
+                    : '';
+
                 $uninstallBtn = (array_get($item, 'enabled') && array_get($item, 'installed')) ? form()->button('Uninstall', [
                     'title' => 'Uninstall this theme\'s dependencies',
                     'data-ajax' => route('admin::themes.uninstall.post', [
@@ -99,7 +116,7 @@ class ThemesListDataTable extends AbstractDataTables
                     'class' => 'btn btn-outline red-sunglo btn-sm ajax-link',
                 ]) : '';
 
-                return $activeBtn . $disableBtn . $installBtn . $uninstallBtn;
+                return $activeBtn . $disableBtn . $installBtn . $updateBtn . $uninstallBtn;
             });
 
         return $this;

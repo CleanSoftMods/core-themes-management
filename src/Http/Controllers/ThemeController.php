@@ -1,7 +1,7 @@
 <?php namespace WebEd\Base\ThemesManagement\Http\Controllers;
 
 use WebEd\Base\Core\Http\Controllers\BaseAdminController;
-use WebEd\Base\Core\Support\DataTable\DataTables;
+use Illuminate\Support\Facades\Artisan;
 use WebEd\Base\ThemesManagement\Http\DataTables\ThemesListDataTable;
 
 class ThemeController extends BaseAdminController
@@ -76,11 +76,31 @@ class ThemeController extends BaseAdminController
             return $check;
         }
 
-        \Artisan::call('theme:install', [
+        Artisan::call('theme:install', [
             'alias' => $alias
         ]);
 
         return response_with_messages('Installed theme dependencies');
+    }
+
+    public function postUpdate($alias)
+    {
+        $theme = get_theme_information($alias);
+
+        if (!$theme) {
+            return response_with_messages('Theme not exists', true, \Constants::ERROR_CODE);
+        }
+
+        $check = check_module_require($theme);
+        if ($check['error']) {
+            return $check;
+        }
+
+        Artisan::call('theme:update', [
+            'alias' => $alias
+        ]);
+
+        return response_with_messages('Your theme has been updated');
     }
 
     public function postUninstall($alias)
@@ -96,7 +116,7 @@ class ThemeController extends BaseAdminController
             return $check;
         }
 
-        \Artisan::call('theme:uninstall', [
+        Artisan::call('theme:uninstall', [
             'alias' => $alias
         ]);
 

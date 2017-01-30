@@ -24,6 +24,10 @@ Route::group(['prefix' => $adminRoute], function (Router $router) use ($adminRou
             ->name('admin::themes.install.post')
             ->middleware('has-role:super-admin');
 
+        $router->post('update/{module}', 'ThemeController@postUpdate')
+            ->name('admin::themes.update.post')
+            ->middleware('has-role:super-admin');
+
         $router->post('uninstall/{module}', 'ThemeController@postUninstall')
             ->name('admin::themes.uninstall.post')
             ->middleware('has-role:super-admin');

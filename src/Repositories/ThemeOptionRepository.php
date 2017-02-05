@@ -1,12 +1,14 @@
 <?php namespace WebEd\Base\ThemesManagement\Repositories;
 
-use WebEd\Base\Core\Repositories\AbstractBaseRepository;
+use WebEd\Base\Caching\Services\Traits\Cacheable;
+use WebEd\Base\Core\Repositories\Eloquent\EloquentBaseRepository;
 use WebEd\Base\Caching\Services\Contracts\CacheableContract;
-
 use WebEd\Base\ThemesManagement\Repositories\Contracts\ThemeOptionRepositoryContract;
 
-class ThemeOptionRepository extends AbstractBaseRepository implements ThemeOptionRepositoryContract, CacheableContract
+class ThemeOptionRepository extends EloquentBaseRepository implements ThemeOptionRepositoryContract, CacheableContract
 {
+    use Cacheable;
+
     protected $rules = [
 
     ];
@@ -22,7 +24,8 @@ class ThemeOptionRepository extends AbstractBaseRepository implements ThemeOptio
     public function getOptionsByThemeId($id)
     {
         $result = [];
-        $query = $this->join('themes', 'theme_options.theme_id', '=', 'themes.id')
+        $query = $this->model
+            ->join('themes', 'theme_options.theme_id', '=', 'themes.id')
             ->where('themes.id', '=', $id)
             ->select('theme_options.key', 'theme_options.value')
             ->get();
@@ -39,7 +42,8 @@ class ThemeOptionRepository extends AbstractBaseRepository implements ThemeOptio
     public function getOptionsByThemeAlias($alias)
     {
         $result = [];
-        $query = $this->join('themes', 'theme_options.theme_id', '=', 'themes.id')
+        $query = $this->model
+            ->join('themes', 'theme_options.theme_id', '=', 'themes.id')
             ->where('themes.alias', '=', $alias)
             ->select('theme_options.key', 'theme_options.value')
             ->get();
@@ -61,7 +65,7 @@ class ThemeOptionRepository extends AbstractBaseRepository implements ThemeOptio
                 return $result;
             }
         }
-        return $this->setMessages('Options updated', false, \Constants::SUCCESS_NO_CONTENT_CODE);
+        return response_with_messages('Options updated', false, \Constants::SUCCESS_NO_CONTENT_CODE);
     }
 
     /**
@@ -73,7 +77,7 @@ class ThemeOptionRepository extends AbstractBaseRepository implements ThemeOptio
     {
         $currentTheme = cms_theme_options()->getCurrentTheme();
         if (!$currentTheme) {
-            return $this->setMessages('No theme activated!!!', true, \Constants::ERROR_CODE);
+            return response_with_messages('No theme activated!!!', true, \Constants::ERROR_CODE);
         }
 
         $allowCreateNew = true;
@@ -104,12 +108,12 @@ class ThemeOptionRepository extends AbstractBaseRepository implements ThemeOptio
         ], $allowCreateNew, $justUpdateSomeFields);
 
         if ($result['error']) {
-            return $this->setMessages($result['messages'], true, \Constants::ERROR_CODE, [
+            return response_with_messages($result['messages'], true, \Constants::ERROR_CODE, [
                 'key' => $key,
                 'value' => $value
             ]);
         }
 
-        return $this->setMessages('Options updated', false, \Constants::SUCCESS_NO_CONTENT_CODE);
+        return response_with_messages('Options updated', false, \Constants::SUCCESS_NO_CONTENT_CODE);
     }
 }

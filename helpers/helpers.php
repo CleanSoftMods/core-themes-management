@@ -42,7 +42,7 @@ if (!function_exists('get_all_theme_information')) {
         $themeRepo = app(\WebEd\Base\ThemesManagement\Repositories\Contracts\ThemeRepositoryContract::class);
 
         if ($canAccessDB) {
-            $themes = $themeRepo->all();
+            $themes = $themeRepo->get();
         }
 
         $modules = get_folders_in_path(webed_themes_path());

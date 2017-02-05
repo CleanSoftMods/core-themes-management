@@ -33,6 +33,7 @@ class ConsoleServiceProvider extends ServiceProvider
             \WebEd\Base\ThemesManagement\Console\Generators\MakeView::class,
             \WebEd\Base\ThemesManagement\Console\Generators\MakeProvider::class,
             \WebEd\Base\ThemesManagement\Console\Generators\MakeCommand::class,
+            \WebEd\Base\ThemesManagement\Console\Generators\MakeCriteria::class,
         ]);
     }
 

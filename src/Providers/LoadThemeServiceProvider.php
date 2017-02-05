@@ -57,7 +57,7 @@ class LoadThemeServiceProvider extends ServiceProvider
              * Show the error messages
              */
             add_action('flash_messages', function () {
-                echo \Html::note(
+                echo html()->note(
                     'This theme <b>' . array_get($this->currentTheme, 'name') . '</b> 
                     is enabled, but class not found: ' . $this->themeProvider . '. 
                     Please review and add the namespace of this theme to composer autoload section, then run 

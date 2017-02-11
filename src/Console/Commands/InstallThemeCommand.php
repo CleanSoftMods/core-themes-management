@@ -87,7 +87,7 @@ class InstallThemeCommand extends Command
         \Artisan::call('vendor:publish', [
             '--provider' => str_replace('\\\\', '\\', array_get($theme, 'namespace', '') . '\Providers\ModuleProvider'),
             '--tag' => 'webed-public-assets',
-            '--force' => ''
+            '--force' => true
         ]);
         save_theme_information($theme, [
             'installed' => true,

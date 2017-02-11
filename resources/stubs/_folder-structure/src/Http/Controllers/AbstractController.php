@@ -44,6 +44,7 @@ abstract class AbstractController extends BaseFrontController implements Cacheab
             ->setCacheKey(__FUNCTION__, func_get_args())
             ->retrieveFromCache(function () use ($type, $relatedId) {
                 return webed_menu_render(get_settings('main_menu', 'main-menu'), [
+                    'id' => '',
                     'class' => 'nav navbar-nav navbar-right',
                     'container_class' => 'collapse navbar-collapse',
                     'has_sub_class' => 'dropdown',
@@ -52,6 +53,7 @@ abstract class AbstractController extends BaseFrontController implements Cacheab
                     'group_tag' => 'ul',
                     'child_tag' => 'li',
                     'submenu_class' => 'sub-menu',
+                    'item_class' => '',
                     'active_class' => 'active current-menu-item',
                     'menu_active' => [
                         'type' => $type,

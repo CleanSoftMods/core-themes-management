@@ -59,6 +59,13 @@ class UpdateThemeCommand extends Command
         $this->line('Update module dependencies...');
         $this->registerUpdateModuleService($theme);
 
+        $themeProvider = str_replace('\\\\', '\\', array_get($theme, 'namespace', '') . '\Providers\ModuleProvider');
+        \Artisan::call('vendor:publish', [
+            '--provider' => $themeProvider,
+            '--tag' => 'webed-public-assets',
+            '--force' => true
+        ]);
+
         $this->info("\nTheme " . $this->argument('alias') . " has been updated.");
     }
 

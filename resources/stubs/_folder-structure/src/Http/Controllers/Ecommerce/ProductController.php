@@ -58,7 +58,7 @@ class ProductController extends AbstractController
 
         $this->product = $item;
 
-        $this->getMenu('page', $item->id);
+        $this->getMenu('product-category', $this->dis['categoryIds']);
 
         $happyMethod = '_template_' . studly_case($item->page_template);
 

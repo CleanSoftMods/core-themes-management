@@ -44,6 +44,8 @@ class PostController extends AbstractController
 
         $this->post = $item;
 
+        $this->getMenu('category', $this->dis['categoryIds']);
+
         $happyMethod = '_template_' . studly_case($item->page_template);
         if (method_exists($this, $happyMethod)) {
             return $this->$happyMethod();

@@ -79,7 +79,7 @@ class ProductController extends AbstractController
         $this->dis['relatedProducts'] = $relatedProductIds
             ? $this->repository
                 ->where('products.id', $relatedProductIds)
-                ->pushCriteria(WhereProductPriceBelongsToCurrency::class, ['currency' => cms_currency()->getApplicationCurrency()])
+                ->pushCriteria(new WhereProductPriceBelongsToCurrency(cms_currency()->getApplicationCurrency()->id))
                 ->get()
             : [];
 
@@ -87,7 +87,7 @@ class ProductController extends AbstractController
             ? $this->categoryRepository
                 ->where('status', '=', 'activated')
                 ->where('id', '=', $this->dis['categoryIds'])
-                ->select('id', 'slug', 'title')
+                ->select(['id', 'slug', 'title'])
                 ->get()
             : [];
 
@@ -95,7 +95,7 @@ class ProductController extends AbstractController
             ? $this->productLabelRepository
                 ->where('status', '=', 'activated')
                 ->where('id', '=', $this->dis['productLabelIds'])
-                ->select('id', 'slug', 'title')
+                ->select(['id', 'slug', 'title'])
                 ->get()
             : [];
 

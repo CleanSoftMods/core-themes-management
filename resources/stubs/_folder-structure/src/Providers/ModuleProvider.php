@@ -19,12 +19,6 @@ class ModuleProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
 
         $this->publishes([
-            __DIR__ . '/../../resources/views' => config('view.paths')[0] . '/vendor/webed-theme',
-        ], 'views');
-        $this->publishes([
-            __DIR__ . '/../../resources/lang' => base_path('resources/lang/vendor/webed-theme'),
-        ], 'lang');
-        $this->publishes([
             __DIR__ . '/../../resources/assets' => resource_path('assets'),
         ], 'webed-assets');
         $this->publishes([

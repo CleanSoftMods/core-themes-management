@@ -6,8 +6,6 @@ use DummyNamespace\Http\Controllers\AbstractController;
 
 class ProductCategoryController extends AbstractController
 {
-    protected $module = 'cosmetics';
-
     /**
      * @var ProductCategory
      */

@@ -10,6 +10,11 @@ use DummyNamespace\Http\Controllers\AbstractController;
 class PageController extends AbstractController
 {
     /**
+     * @var Page
+     */
+    protected $page;
+
+    /**
      * @param PageRepository $repository
      */
     public function __construct(PageContract $repository)
@@ -27,31 +32,31 @@ class PageController extends AbstractController
     {
         $this->dis = $data;
 
+        $this->page = $item;
+
         $this->getMenu('page', $item->id);
 
         $happyMethod = '_template_' . studly_case($item->page_template);
 
         if(method_exists($this, $happyMethod)) {
-            return $this->$happyMethod($item);
+            return $this->$happyMethod();
         }
 
-        return $this->defaultTemplate($item);
+        return $this->defaultTemplate();
     }
 
     /**
-     * @param Page $page
      * @return mixed
      */
-    protected function defaultTemplate(PageModelContract $page)
+    protected function defaultTemplate()
     {
         return $this->view('front.page-templates.default');
     }
 
     /**
-     * @param Page $page
      * @return mixed
      */
-    protected function _template_Homepage(PageModelContract $page)
+    protected function _template_Homepage()
     {
         return $this->view('front.page-templates.homepage');
     }

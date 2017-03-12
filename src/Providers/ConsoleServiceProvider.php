@@ -25,7 +25,7 @@ class ConsoleServiceProvider extends ServiceProvider
         $this->otherCommands();
     }
 
-    private function generatorCommands()
+    protected function generatorCommands()
     {
         $this->commands([
             \WebEd\Base\ThemesManagement\Console\Generators\MakeTheme::class,
@@ -34,10 +34,18 @@ class ConsoleServiceProvider extends ServiceProvider
             \WebEd\Base\ThemesManagement\Console\Generators\MakeProvider::class,
             \WebEd\Base\ThemesManagement\Console\Generators\MakeCommand::class,
             \WebEd\Base\ThemesManagement\Console\Generators\MakeCriteria::class,
+            \WebEd\Base\ThemesManagement\Console\Generators\MakeDataTable::class,
+            \WebEd\Base\ThemesManagement\Console\Generators\MakeFacade::class,
+            \WebEd\Base\ThemesManagement\Console\Generators\MakeMiddleware::class,
+            \WebEd\Base\ThemesManagement\Console\Generators\MakeModel::class,
+            \WebEd\Base\ThemesManagement\Console\Generators\MakeRepository::class,
+            \WebEd\Base\ThemesManagement\Console\Generators\MakeRequest::class,
+            \WebEd\Base\ThemesManagement\Console\Generators\MakeService::class,
+            \WebEd\Base\ThemesManagement\Console\Generators\MakeSupport::class,
         ]);
     }
 
-    private function otherCommands()
+    protected function otherCommands()
     {
         $this->commands([
             \WebEd\Base\ThemesManagement\Console\Commands\EnableThemeCommand::class,

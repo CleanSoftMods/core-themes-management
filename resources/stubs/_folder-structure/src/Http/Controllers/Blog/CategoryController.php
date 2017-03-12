@@ -45,6 +45,8 @@ class CategoryController extends AbstractController
      */
     protected function defaultTemplate()
     {
+        $this->dis['relatedPosts'] = get_posts_by_category($this->category->id);
+
         return $this->view('front.category-templates.default');
     }
 }

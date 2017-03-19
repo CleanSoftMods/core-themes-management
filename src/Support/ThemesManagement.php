@@ -1,6 +1,6 @@
 <?php namespace WebEd\Base\ThemesManagement\Support;
 
-use WebEd\Base\Core\Http\Controllers\BaseFrontController;
+use WebEd\Base\Http\Controllers\BaseFrontController;
 
 class ThemesManagement
 {

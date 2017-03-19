@@ -3,7 +3,7 @@
 use WebEd\Base\Caching\Services\CacheService;
 use WebEd\Base\Caching\Services\Contracts\CacheableContract;
 use WebEd\Base\Caching\Services\Traits\Cacheable;
-use WebEd\Base\Core\Http\Controllers\BaseFrontController;
+use WebEd\Base\Http\Controllers\BaseFrontController;
 
 abstract class AbstractController extends BaseFrontController implements CacheableContract
 {

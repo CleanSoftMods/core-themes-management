@@ -1,6 +1,6 @@
 <?php namespace DummyNamespace;
 
-use WebEd\Base\Core\Models\Contracts\BaseModelContract;
+use WebEd\Base\Models\Contracts\BaseModelContract;
 
 interface DummyClassContract
 {

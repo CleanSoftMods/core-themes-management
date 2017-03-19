@@ -1,6 +1,6 @@
 <?php namespace WebEd\Base\ThemesManagement\Repositories;
 
-use WebEd\Base\Caching\Repositories\Eloquent\EloquentBaseRepositoryCacheDecorator;
+use WebEd\Base\Repositories\Eloquent\EloquentBaseRepositoryCacheDecorator;
 
 use WebEd\Base\ThemesManagement\Repositories\Contracts\ThemeRepositoryContract;
 

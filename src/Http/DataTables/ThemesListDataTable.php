@@ -1,6 +1,6 @@
 <?php namespace WebEd\Base\ThemesManagement\Http\DataTables;
 
-use WebEd\Base\Core\Http\DataTables\AbstractDataTables;
+use WebEd\Base\Http\DataTables\AbstractDataTables;
 
 class ThemesListDataTable extends AbstractDataTables
 {

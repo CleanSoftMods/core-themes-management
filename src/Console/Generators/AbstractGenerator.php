@@ -1,6 +1,6 @@
 <?php namespace WebEd\Base\ThemesManagement\Console\Generators;
 
-use WebEd\Base\Core\Console\Generators\BaseAbstractGenerator;
+use WebEd\Base\Console\Generators\BaseAbstractGenerator;
 
 abstract class AbstractGenerator extends BaseAbstractGenerator
 {

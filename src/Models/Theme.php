@@ -1,7 +1,7 @@
 <?php namespace WebEd\Base\ThemesManagement\Models;
 
 use WebEd\Base\ThemesManagement\Models\Contracts\ThemeModelContract;
-use WebEd\Base\Core\Models\EloquentBase as BaseModel;
+use WebEd\Base\Models\EloquentBase as BaseModel;
 
 class Theme extends BaseModel implements ThemeModelContract
 {

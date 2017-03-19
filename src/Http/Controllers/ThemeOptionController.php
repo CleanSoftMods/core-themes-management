@@ -1,6 +1,6 @@
 <?php namespace WebEd\Base\ThemesManagement\Http\Controllers;
 
-use WebEd\Base\Core\Http\Controllers\BaseAdminController;
+use WebEd\Base\Http\Controllers\BaseAdminController;
 use WebEd\Base\ThemesManagement\Repositories\Contracts\ThemeOptionRepositoryContract;
 use WebEd\Base\ThemesManagement\Repositories\ThemeOptionRepository;
 
@@ -47,7 +47,7 @@ class ThemeOptionController extends BaseAdminController
 
         $msgType = $result['error'] ? 'danger' : 'success';
 
-        $this->flashMessagesHelper
+        flash_messages()
             ->addMessages($result['messages'], $msgType)
             ->showMessagesOnSession();
 

@@ -1,6 +1,6 @@
 <?php namespace WebEd\Base\ThemesManagement\Http\Controllers;
 
-use WebEd\Base\Core\Http\Controllers\BaseAdminController;
+use WebEd\Base\Http\Controllers\BaseAdminController;
 use Illuminate\Support\Facades\Artisan;
 use WebEd\Base\ThemesManagement\Http\DataTables\ThemesListDataTable;
 

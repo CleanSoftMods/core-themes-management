@@ -4,7 +4,7 @@ use Illuminate\Support\ServiceProvider;
 
 class UpdateModuleServiceProvider extends ServiceProvider
 {
-    protected $module = 'WebEd\Base\ThemesManagement';
+    protected $module = 'webed-themes-management';
 
     /**
      * Bootstrap any application services.
@@ -25,13 +25,13 @@ class UpdateModuleServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        register_theme_update_batches([
+        register_module_update_batches('webed-themes-management', [
 
         ]);
     }
 
     protected function booted()
     {
-        load_theme_update_batches();
+        load_module_update_batches('webed-themes-management');
     }
 }

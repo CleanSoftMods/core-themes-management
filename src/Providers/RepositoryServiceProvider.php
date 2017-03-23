@@ -12,8 +12,6 @@ use WebEd\Base\ThemesManagement\Repositories\ThemeRepositoryCacheDecorator;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
-    protected $module = 'WebEd\Base\ThemesManagement';
-
     /**
      * Register the application services.
      *

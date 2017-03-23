@@ -4,7 +4,7 @@ use Illuminate\Support\ServiceProvider;
 
 class InstallModuleServiceProvider extends ServiceProvider
 {
-    protected $module = 'WebEd\Base\ThemesManagement';
+    protected $module = 'webed-themes-management';
 
     /**
      * Bootstrap the application services.

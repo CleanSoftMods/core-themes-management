@@ -1,6 +1,10 @@
 <?php namespace WebEd\Base\ThemesManagement\Http\DataTables;
 
 use WebEd\Base\Http\DataTables\AbstractDataTables;
+use WebEd\Base\ThemesManagement\Facades\ThemesFacade;
+use Yajra\Datatables\Engines\CollectionEngine;
+use Yajra\Datatables\Engines\EloquentEngine;
+use Yajra\Datatables\Engines\QueryBuilderEngine;
 
 class ThemesListDataTable extends AbstractDataTables
 {
@@ -8,9 +12,45 @@ class ThemesListDataTable extends AbstractDataTables
 
     public function __construct()
     {
-        $this->repository = themes_management()->getAllThemesInformation()->values();
+        $this->repository = ThemesFacade::getAllThemes(false);
+    }
 
-        parent::__construct();
+    /**
+     * @return array
+     */
+    public function headings()
+    {
+        return [
+            'thumbnail' => [
+                'title' => trans('webed-themes-management::datatables.heading.thumbnail'),
+                'width' => '15%',
+            ],
+            'name' => [
+                'title' => trans('webed-themes-management::datatables.heading.name'),
+                'width' => '20%',
+            ],
+            'description' => [
+                'title' => trans('webed-themes-management::datatables.heading.description'),
+                'width' => '40%',
+            ],
+            'actions' => [
+                'title' => trans('webed-core::datatables.heading.actions'),
+                'width' => '40%',
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function columns()
+    {
+        return [
+            ['data' => 'thumbnail', 'name' => 'thumbnail', 'searchable' => false, 'orderable' => false],
+            ['data' => 'name', 'name' => 'name', 'searchable' => false, 'orderable' => false],
+            ['data' => 'description', 'name' => 'description', 'searchable' => false, 'orderable' => false],
+            ['data' => 'actions', 'name' => 'actions', 'searchable' => false, 'orderable' => false],
+        ];
     }
 
     /**
@@ -20,33 +60,21 @@ class ThemesListDataTable extends AbstractDataTables
     {
         $this->setAjaxUrl(route('admin::themes.index.post'), 'POST');
 
-        $this
-            ->addHeading('thumbnail', 'Thumbnail', '1%')
-            ->addHeading('name', 'Name', '20%')
-            ->addHeading('description', 'Description', '40%')
-            ->addHeading('actions', 'Actions', '40%');
-
-        $this->setColumns([
-            ['data' => 'thumbnail', 'name' => 'thumbnail', 'searchable' => false, 'orderable' => false],
-            ['data' => 'name', 'name' => 'name', 'searchable' => false, 'orderable' => false],
-            ['data' => 'description', 'name' => 'description', 'searchable' => false, 'orderable' => false],
-            ['data' => 'actions', 'name' => 'actions', 'searchable' => false, 'orderable' => false],
-        ]);
-
         return $this->view();
     }
 
     /**
-     * @return $this
+     * @return CollectionEngine|EloquentEngine|QueryBuilderEngine|mixed
      */
-    protected function fetch()
+    protected function fetchDataForAjax()
     {
-        $this->fetch = datatable()->of($this->repository)
+        return datatable()->of($this->repository)
+            ->rawColumns(['description', 'actions', 'thumbnail'])
             ->editColumn('description', function ($item) {
                 return array_get($item, 'description') . '<br><br>'
-                    . 'Author: ' . array_get($item, 'author') . '<br><br>'
-                    . 'Version: <b>' . array_get($item, 'version', '...') . '</b>' . '<br>'
-                    . 'Installed version: <b>' . array_get($item, 'installed_version', '...') . '</b>';
+                    . trans('webed-themes-management::datatables.author') . ': <b>' . array_get($item, 'author') . '</b><br>'
+                    . trans('webed-themes-management::datatables.version') . ': <b>' . array_get($item, 'version', '...') . '</b>' . '<br>'
+                    . trans('webed-themes-management::datatables.installed_version') . ': <b>' . (array_get($item, 'installed_version') ?: '...') . '</b>';
             })
             ->addColumn('thumbnail', function ($item) {
                 $themeFolder = get_base_folder($item['file']);
@@ -59,8 +87,8 @@ class ThemesListDataTable extends AbstractDataTables
                 return '<img src="' . $src . '" alt="' . array_get($item, 'alias') . '" width="240" height="180" class="theme-thumbnail">';
             })
             ->addColumn('actions', function ($item) {
-                $activeBtn = (!array_get($item, 'enabled')) ? form()->button('Active', [
-                    'title' => 'Active this theme',
+                $activeBtn = (!array_get($item, 'enabled')) ? form()->button(trans('webed-themes-management::datatables.active'), [
+                    'title' => trans('webed-themes-management::datatables.active_this_theme'),
                     'data-ajax' => route('admin::themes.change-status.post', [
                         'module' => array_get($item, 'alias'),
                         'status' => 1,
@@ -69,8 +97,8 @@ class ThemesListDataTable extends AbstractDataTables
                     'data-toggle' => 'confirmation',
                     'class' => 'btn btn-outline blue btn-sm ajax-link',
                 ]) : '';
-                $disableBtn = (array_get($item, 'enabled')) ? form()->button('Disable', [
-                    'title' => 'Disable this theme',
+                $disableBtn = (array_get($item, 'enabled')) ? form()->button(trans('webed-themes-management::datatables.disable'), [
+                    'title' => trans('webed-themes-management::datatables.disable_this_theme'),
                     'data-ajax' => route('admin::themes.change-status.post', [
                         'module' => array_get($item, 'alias'),
                         'status' => 0,
@@ -80,8 +108,8 @@ class ThemesListDataTable extends AbstractDataTables
                     'class' => 'btn btn-outline yellow-lemon btn-sm ajax-link',
                 ]) : '';
 
-                $installBtn = (array_get($item, 'enabled') && !array_get($item, 'installed')) ? form()->button('Install', [
-                    'title' => 'Install this theme\'s dependencies',
+                $installBtn = (array_get($item, 'enabled') && !array_get($item, 'installed')) ? form()->button(trans('webed-themes-management::datatables.install'), [
+                    'title' => trans('webed-themes-management::datatables.install_this_theme'),
                     'data-ajax' => route('admin::themes.install.post', [
                         'module' => array_get($item, 'alias'),
                     ]),
@@ -95,8 +123,8 @@ class ThemesListDataTable extends AbstractDataTables
                     array_get($item, 'installed') &&
                     version_compare(array_get($item, 'installed_version'), array_get($item, 'version'), '<')
                 )
-                    ? form()->button('Update', [
-                        'title' => 'Update this theme',
+                    ? form()->button(trans('webed-themes-management::datatables.update'), [
+                        'title' => trans('webed-themes-management::datatables.update_this_theme'),
                         'data-ajax' => route('admin::themes.update.post', [
                             'module' => array_get($item, 'alias'),
                         ]),
@@ -106,8 +134,8 @@ class ThemesListDataTable extends AbstractDataTables
                     ])
                     : '';
 
-                $uninstallBtn = (array_get($item, 'enabled') && array_get($item, 'installed')) ? form()->button('Uninstall', [
-                    'title' => 'Uninstall this theme\'s dependencies',
+                $uninstallBtn = (array_get($item, 'enabled') && array_get($item, 'installed')) ? form()->button(trans('webed-themes-management::datatables.uninstall'), [
+                    'title' => trans('webed-themes-management::datatables.uninstall_this_theme'),
                     'data-ajax' => route('admin::themes.uninstall.post', [
                         'module' => array_get($item, 'alias'),
                     ]),
@@ -118,7 +146,5 @@ class ThemesListDataTable extends AbstractDataTables
 
                 return $activeBtn . $disableBtn . $installBtn . $updateBtn . $uninstallBtn;
             });
-
-        return $this;
     }
 }

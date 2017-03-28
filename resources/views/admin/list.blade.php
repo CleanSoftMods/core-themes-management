@@ -19,14 +19,14 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">
                         <i class="icon-layers font-dark"></i>
-                        Themes list
+                        {{ trans('webed-themes-management::base.themes_list') }}
                     </h3>
                 </div>
                 <div class="box-body">
                     {!! $dataTable or '' !!}
                 </div>
             </div>
-            @php do_action('meta_boxes', 'main', 'webed-themes-management.index') @endphp
+            @php do_action(BASE_ACTION_META_BOXES, 'main', 'webed-themes-management.index', null) @endphp
         </div>
     </div>
 @endsection

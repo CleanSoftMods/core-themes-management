@@ -1,5 +1,7 @@
 <?php
 
+use WebEd\Base\ThemesManagement\Facades\ThemesFacade;
+
 if (!function_exists('webed_themes_path')) {
     /**
      * @param string $path
@@ -23,71 +25,11 @@ if (!function_exists('themes_management')) {
 
 if (!function_exists('get_all_theme_information')) {
     /**
-     * @return array
+     * @return array|\Illuminate\Support\Collection
      */
-    function get_all_theme_information()
+    function get_all_theme_information($toArray = true)
     {
-        $modulesArr = [];
-
-        $canAccessDB = true;
-        if (app()->runningInConsole()) {
-            if (!check_db_connection() || !\Schema::hasTable('themes')) {
-                $canAccessDB = false;
-            }
-        }
-
-        /**
-         * @var \WebEd\Base\ThemesManagement\Repositories\ThemeRepository $themeRepo
-         */
-        $themeRepo = app(\WebEd\Base\ThemesManagement\Repositories\Contracts\ThemeRepositoryContract::class);
-
-        if ($canAccessDB) {
-            $themes = $themeRepo->get();
-        }
-
-        $modules = get_folders_in_path(webed_themes_path());
-
-        foreach ($modules as $row) {
-            $file = $row . '/module.json';
-            $data = json_decode(get_file_data($file), true);
-            if ($data === null || !is_array($data)) {
-                continue;
-            }
-
-            if ($canAccessDB) {
-                $theme = $themes->where('alias', '=', array_get($data, 'alias'))->first();
-
-                if (!$theme) {
-                    $result = $themeRepo
-                        ->editWithValidate(0, [
-                            'alias' => array_get($data, 'alias'),
-                            'enabled' => false,
-                            'installed' => false,
-                        ], true, true);
-                    /**
-                     * Everything ok
-                     */
-                    if (!$result['error']) {
-                        $theme = $result['data'];
-                    }
-                }
-
-                if ($theme) {
-                    $data['enabled'] = !!$theme->enabled;
-                    $data['installed'] = !!$theme->installed;
-                    $data['id'] = $theme->id;
-                    $data['installed_version'] = $theme->installed_version;
-                }
-            }
-
-            $modulesArr[array_get($data, 'namespace')] = array_merge($data, [
-                'file' => $file,
-                'type' => 'themes',
-                'require' => array_get($data, 'require') && is_array(array_get($data, 'require')) ? array_get($data, 'require') : []
-            ]);
-        }
-
-        return $modulesArr;
+        return ThemesFacade::getAllThemes($toArray);
     }
 }
 
@@ -98,9 +40,7 @@ if (!function_exists('get_theme_information')) {
      */
     function get_theme_information($alias)
     {
-        return themes_management()->getAllThemesInformation()
-            ->where('alias', '=', $alias)
-            ->first();
+        return ThemesFacade::findByAlias($alias);
     }
 }
 
@@ -111,9 +51,7 @@ if (!function_exists('theme_exists')) {
      */
     function theme_exists($alias)
     {
-        return !!themes_management()->getAllThemesInformation()
-            ->where('alias', '=', $alias)
-            ->first();
+        return !!ThemesFacade::findByAlias($alias);;
     }
 }
 
@@ -125,22 +63,7 @@ if (!function_exists('save_theme_information')) {
      */
     function save_theme_information($alias, array $data)
     {
-        $module = is_array($alias) ? $alias : get_theme_information($alias);
-        if (!$module) {
-            return false;
-        }
-
-        /**
-         * @var \WebEd\Base\ThemesManagement\Repositories\ThemeRepository $themeRepo
-         */
-        $themeRepo = app(\WebEd\Base\ThemesManagement\Repositories\Contracts\ThemeRepositoryContract::class);
-
-        $result = $themeRepo
-            ->editWithValidate(array_get($module, 'id'), array_merge($data, [
-                'alias' => array_get($module, 'alias'),
-            ]), true, true);
-
-        return !array_get($result, 'error');
+        return ThemesFacade::saveTheme($alias, $data);
     }
 }
 
@@ -151,7 +74,7 @@ if (!function_exists('is_theme_enabled')) {
      */
     function is_theme_enabled($alias)
     {
-        $theme = get_theme_information($alias);
+        $theme = ThemesFacade::findByAlias($alias);
         if (!$theme || !array_get($theme, 'enabled')) {
             return false;
         }
@@ -166,7 +89,7 @@ if (!function_exists('is_theme_installed')) {
      */
     function is_theme_installed($alias)
     {
-        $theme = get_theme_information($alias);
+        $theme = ThemesFacade::findByAlias($alias);
         if (!$theme || !array_get($theme, 'installed')) {
             return false;
         }
@@ -181,10 +104,6 @@ if (!function_exists('get_current_theme')) {
      */
     function get_current_theme()
     {
-        $currentTheme = themes_management()->getAllThemesInformation()
-            ->where('enabled', '=', true)
-            ->first();
-
-        return $currentTheme;
+        return ThemesFacade::getCurrentTheme();
     }
 }

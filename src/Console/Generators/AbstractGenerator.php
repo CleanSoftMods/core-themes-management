@@ -29,7 +29,7 @@ abstract class AbstractGenerator extends BaseAbstractGenerator
      */
     protected function getCurrentModule()
     {
-        $module = themes_management()->getCurrentTheme();
+        $module = get_current_theme();
 
         if(!$module) {
             $this->error('No theme activated');

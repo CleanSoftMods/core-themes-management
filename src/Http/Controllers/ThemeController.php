@@ -12,10 +12,6 @@ class ThemeController extends BaseAdminController
     {
         parent::__construct();
 
-        $this->breadcrumbs->addLink('Themes');
-
-        $this->setPageTitle('Themes');
-
         $this->getDashboardMenu($this->module);
     }
 
@@ -25,9 +21,12 @@ class ThemeController extends BaseAdminController
      */
     public function getIndex(ThemesListDataTable $themesListDataTable)
     {
+        $this->breadcrumbs->addLink(trans('webed-themes-management::base.themes'));
+        $this->setPageTitle(trans('webed-themes-management::base.themes'));
+
         $this->dis['dataTable'] = $themesListDataTable->run();
 
-        return do_filter('webed-themes-management.index.get', $this)->viewAdmin('list');
+        return do_filter(BASE_FILTER_CONTROLLER, $this, WEBED_THEMES_MANAGEMENT, 'index.get')->viewAdmin('list');
     }
 
     /**
@@ -45,21 +44,17 @@ class ThemeController extends BaseAdminController
         $theme = get_theme_information($alias);
 
         if (!$theme) {
-            return response_with_messages('Theme not exists', true, \Constants::ERROR_CODE);
+            return response_with_messages(trans('webed-themes-management::base.theme_not_exists'), true, \Constants::ERROR_CODE);
         }
 
-        switch ((bool)$status) {
-            case true:
-                $check = check_module_require($theme);
-                if ($check['error']) {
-                    return $check;
-                }
-
-                return themes_management()->enableTheme($alias)->refreshComposerAutoload();
-                break;
-            default:
-                return themes_management()->disableTheme($alias)->refreshComposerAutoload();
-                break;
+        if (!$status) {
+            return themes_management()->disableTheme($alias)->refreshComposerAutoload();
+        } else {
+            $check = check_module_require($theme);
+            if ($check['error']) {
+                return $check;
+            }
+            return themes_management()->enableTheme($alias)->refreshComposerAutoload();
         }
     }
 
@@ -68,7 +63,7 @@ class ThemeController extends BaseAdminController
         $theme = get_theme_information($alias);
 
         if (!$theme) {
-            return response_with_messages('Theme not exists', true, \Constants::ERROR_CODE);
+            return response_with_messages(trans('webed-themes-management::base.theme_not_exists'), true, \Constants::ERROR_CODE);
         }
 
         $check = check_module_require($theme);
@@ -80,7 +75,7 @@ class ThemeController extends BaseAdminController
             'alias' => $alias
         ]);
 
-        return response_with_messages('Installed theme dependencies');
+        return response_with_messages(trans('webed-themes-management::base.theme_installed'));
     }
 
     public function postUpdate($alias)
@@ -88,7 +83,7 @@ class ThemeController extends BaseAdminController
         $theme = get_theme_information($alias);
 
         if (!$theme) {
-            return response_with_messages('Theme not exists', true, \Constants::ERROR_CODE);
+            return response_with_messages(trans('webed-themes-management::base.theme_not_exists'), true, \Constants::ERROR_CODE);
         }
 
         $check = check_module_require($theme);
@@ -100,7 +95,7 @@ class ThemeController extends BaseAdminController
             'alias' => $alias
         ]);
 
-        return response_with_messages('Your theme has been updated');
+        return response_with_messages(trans('webed-themes-management::base.theme_updated'));
     }
 
     public function postUninstall($alias)
@@ -108,7 +103,7 @@ class ThemeController extends BaseAdminController
         $theme = get_theme_information($alias);
 
         if (!$theme) {
-            return response_with_messages('Theme not exists', true, \Constants::ERROR_CODE);
+            return response_with_messages(trans('webed-themes-management::base.theme_not_exists'), true, \Constants::ERROR_CODE);
         }
 
         $check = check_module_require($theme);
@@ -120,6 +115,6 @@ class ThemeController extends BaseAdminController
             'alias' => $alias
         ]);
 
-        return response_with_messages('Uninstalled theme dependencies');
+        return response_with_messages(trans('webed-themes-management::base.theme_uninstalled'));
     }
 }

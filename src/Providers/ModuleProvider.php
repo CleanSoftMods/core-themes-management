@@ -1,9 +1,11 @@
 <?php namespace WebEd\Base\ThemesManagement\Providers;
 
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use WebEd\Base\ThemesManagement\Facades\ThemeOptionsSupportFacade;
 use WebEd\Base\ThemesManagement\Facades\ThemesManagementFacade;
+use WebEd\Base\ThemesManagement\Http\Middleware\BootstrapModuleMiddleware;
 
 class ModuleProvider extends ServiceProvider
 {
@@ -27,6 +29,10 @@ class ModuleProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../resources/lang' => base_path('resources/lang/vendor/webed-themes-management'),
         ], 'lang');
+
+        app()->booted(function () {
+            $this->app->register(BootstrapModuleServiceProvider::class);
+        });
     }
 
     /**
@@ -48,6 +54,11 @@ class ModuleProvider extends ServiceProvider
         $this->app->register(ConsoleServiceProvider::class);
         $this->app->register(LoadThemeServiceProvider::class);
         $this->app->register(HookServiceProvider::class);
-        $this->app->register(BootstrapModuleServiceProvider::class);
+
+        /**
+         * @var Router $router
+         */
+        $router = $this->app['router'];
+        $router->pushMiddlewareToGroup('web', BootstrapModuleMiddleware::class);
     }
 }

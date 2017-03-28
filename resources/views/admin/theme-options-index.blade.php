@@ -16,7 +16,7 @@
     <div class="layout-2columns sidebar-left">
         <div class="column left">
             <ul class="list-group">
-                @php do_action('meta_boxes', 'top-sidebar', 'webed-themes-management.theme-options.index') @endphp
+                @php do_action(BASE_ACTION_META_BOXES, 'top-sidebar', 'webed-themes-management.theme-options.index') @endphp
                 @foreach(cms_theme_options()->export() as $key => $row)
                     <li class="list-group-item
                         {{ (!Request::exists('_tab') && $loop->first === true) || Request::get('_tab') === $key ? 'active' : '' }}"
@@ -27,7 +27,7 @@
                         </a>
                     </li>
                 @endforeach
-                @php do_action('meta_boxes', 'bottom-sidebar', 'webed-themes-management.theme-options.index') @endphp
+                @php do_action(BASE_ACTION_META_BOXES, 'bottom-sidebar', 'webed-themes-management.theme-options.index') @endphp
             </ul>
         </div>
         <div class="column main">
@@ -64,7 +64,7 @@
                     </div>
                     @endif
                 @endforeach
-                @php do_action('meta_boxes', 'main', 'webed-themes-management.theme-options.index') @endphp
+                @php do_action(BASE_ACTION_META_BOXES, 'main', 'webed-themes-management.theme-options.index') @endphp
             </div>
         </div>
     </div>

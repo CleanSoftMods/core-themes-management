@@ -1,6 +1,7 @@
 <?php namespace WebEd\Base\ThemesManagement\Support;
 
 use WebEd\Base\Http\Controllers\BaseFrontController;
+use WebEd\Base\ThemesManagement\Facades\ThemesFacade;
 
 class ThemesManagement
 {
@@ -16,8 +17,8 @@ class ThemesManagement
 
     public function __construct()
     {
-        $this->themes = collect(get_all_theme_information());
-        $this->currentTheme = $this->getCurrentTheme();
+        $this->themes = ThemesFacade::getAllThemes(false);
+        $this->currentTheme = get_current_theme();
     }
 
     /**
@@ -29,7 +30,7 @@ class ThemesManagement
     {
         $theme = $this->themes->where('alias', '=', $alias)->first();
         if (!$theme) {
-            throw new \RuntimeException('Theme not found: ' . $alias);
+            throw new \RuntimeException(trans('webed-themes-management::base.theme_not_found') . $alias);
         }
 
         /**
@@ -59,7 +60,7 @@ class ThemesManagement
     {
         $theme = $this->themes->where('alias', '=', $alias)->first();
         if (!$theme) {
-            throw new \RuntimeException('Theme not found: ' . $alias);
+            throw new \RuntimeException(trans('webed-themes-management::base.theme_not_found') . $alias);
         }
 
         /**
@@ -136,14 +137,6 @@ class ThemesManagement
     }
 
     /**
-     * @return array|null
-     */
-    public function getCurrentTheme()
-    {
-        return $this->themes->where('enabled', '=', true)->first();
-    }
-
-    /**
      * @var string $controllerName
      * @return BaseFrontController|null
      */
@@ -160,13 +153,5 @@ class ThemesManagement
         } catch (\Exception $exception) {
             return $controller;
         }
-    }
-
-    /**
-     * @return array|\Illuminate\Support\Collection
-     */
-    public function getAllThemesInformation()
-    {
-        return $this->themes;
     }
 }

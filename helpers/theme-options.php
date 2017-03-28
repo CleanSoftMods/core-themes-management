@@ -1,12 +1,14 @@
 <?php
 
+use WebEd\Base\ThemesManagement\Facades\ThemeOptionsSupportFacade;
+
 if (!function_exists('cms_theme_options')) {
     /**
      * @return \WebEd\Base\ThemesManagement\Support\ThemeOptionsSupport
      */
     function cms_theme_options()
     {
-        return \ThemeOptions::getFacadeRoot();
+        return ThemeOptionsSupportFacade::getFacadeRoot();
     }
 }
 
@@ -18,6 +20,6 @@ if (!function_exists('get_theme_options')) {
      */
     function get_theme_options($key = null, $default = null)
     {
-        return cms_theme_options()->getOption($key, $default);
+        return ThemeOptionsSupportFacade::getOption($key, $default);
     }
 }

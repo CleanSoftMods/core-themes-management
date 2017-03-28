@@ -69,7 +69,8 @@ class UninstallThemeCommand extends Command
             $this->app->register($namespace);
         }
         save_theme_information($theme, [
-            'installed' => false
+            'installed' => false,
+            'installed_version' => '',
         ]);
         $this->line('Uninstalled');
     }

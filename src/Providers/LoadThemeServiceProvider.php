@@ -39,7 +39,7 @@ class LoadThemeServiceProvider extends ServiceProvider
      */
     private function booted()
     {
-        $this->currentTheme = themes_management()->getCurrentTheme();
+        $this->currentTheme = get_current_theme();
         if(!$this->currentTheme) {
             $this->themeLoaded = true;
 

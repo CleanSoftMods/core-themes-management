@@ -2,7 +2,7 @@
 
 use WebEd\Base\Pages\Models\Contracts\PageModelContract;
 use WebEd\Base\Pages\Models\Page;
-use WebEd\Base\Pages\Repositories\Contracts\PageContract;
+use WebEd\Base\Pages\Repositories\Contracts\PageRepositoryContract;
 use WebEd\Base\Pages\Repositories\PageRepository;
 
 use DummyNamespace\Http\Controllers\AbstractController;
@@ -17,7 +17,7 @@ class PageController extends AbstractController
     /**
      * @param PageRepository $repository
      */
-    public function __construct(PageContract $repository)
+    public function __construct(PageRepositoryContract $repository)
     {
         parent::__construct();
 

@@ -26,7 +26,7 @@
                     {!! $dataTable or '' !!}
                 </div>
             </div>
-            @php do_action(BASE_ACTION_META_BOXES, 'main', 'webed-themes-management.index', null) @endphp
+            @php do_action(BASE_ACTION_META_BOXES, 'main', WEBED_THEMES_MANAGEMENT . '.index', null) @endphp
         </div>
     </div>
 @endsection

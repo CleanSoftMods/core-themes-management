@@ -71,16 +71,16 @@ class Themes
 
                 if (!$theme) {
                     $result = $themeRepo
-                        ->editWithValidate(0, [
+                        ->create([
                             'alias' => array_get($data, 'alias'),
                             'enabled' => false,
                             'installed' => false,
-                        ], true, true);
+                        ]);
                     /**
                      * Everything ok
                      */
-                    if (!$result['error']) {
-                        $theme = $result['data'];
+                    if ($result) {
+                        $theme = $themeRepo->find($result);
                     }
                 }
 
@@ -153,10 +153,10 @@ class Themes
         $themeRepo = app(ThemeRepositoryContract::class);
 
         $result = $themeRepo
-            ->editWithValidate(array_get($module, 'id'), array_merge($data, [
+            ->createOrUpdate(array_get($module, 'id'), array_merge($data, [
                 'alias' => array_get($module, 'alias'),
-            ]), true, true);
+            ]));
 
-        return !array_get($result, 'error');
+        return $result;
     }
 }

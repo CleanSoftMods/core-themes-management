@@ -12,7 +12,11 @@ class ThemeController extends BaseAdminController
     {
         parent::__construct();
 
-        $this->getDashboardMenu($this->module);
+        $this->middleware(function ($request, $next) {
+            $this->getDashboardMenu($this->module);
+
+            return $next($request);
+        });
     }
 
     /**

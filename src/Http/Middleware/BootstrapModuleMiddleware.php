@@ -33,18 +33,16 @@ class BootstrapModuleMiddleware
             'css_class' => null,
             'permissions' => ['view-themes'],
         ]);
-        if (cms_theme_options()->count()) {
-            \DashboardMenu::registerItem([
-                'id' => 'webed-theme-options',
-                'priority' => 1002,
-                'parent_id' => null,
-                'heading' => null,
-                'title' => trans('webed-themes-management::base.admin_menu.theme_options.title'),
-                'font_icon' => 'icon-settings',
-                'link' => route('admin::theme-options.index.get'),
-                'css_class' => null,
-            ]);
-        }
+        \DashboardMenu::registerItem([
+            'id' => 'webed-theme-options',
+            'priority' => 1002,
+            'parent_id' => null,
+            'heading' => null,
+            'title' => trans('webed-themes-management::base.admin_menu.theme_options.title'),
+            'font_icon' => 'icon-settings',
+            'link' => route('admin::theme-options.index.get'),
+            'css_class' => null,
+        ]);
 
         return $next($request);
     }

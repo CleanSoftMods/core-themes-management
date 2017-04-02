@@ -1,6 +1,7 @@
 <?php namespace WebEd\Base\ThemesManagement\Repositories;
 
 use WebEd\Base\Caching\Services\Traits\Cacheable;
+use WebEd\Base\Models\Contracts\BaseModelContract;
 use WebEd\Base\Repositories\Eloquent\EloquentBaseRepository;
 use WebEd\Base\Caching\Services\Contracts\CacheableContract;
 use WebEd\Base\ThemesManagement\Repositories\Contracts\ThemeOptionRepositoryContract;
@@ -9,13 +10,10 @@ class ThemeOptionRepository extends EloquentBaseRepository implements ThemeOptio
 {
     use Cacheable;
 
-    protected $rules = [
-
-    ];
-
-    protected $editableFields = [
-        '*',
-    ];
+    /**
+     * @var mixed|null
+     */
+    protected $currentTheme;
 
     /**
      * @param $id
@@ -23,16 +21,12 @@ class ThemeOptionRepository extends EloquentBaseRepository implements ThemeOptio
      */
     public function getOptionsByThemeId($id)
     {
-        $result = [];
         $query = $this->model
             ->join('themes', 'theme_options.theme_id', '=', 'themes.id')
             ->where('themes.id', '=', $id)
             ->select('theme_options.key', 'theme_options.value')
             ->get();
-        foreach ($query as $item) {
-            $result[$item->key] = $item->value;
-        }
-        return $result;
+        return $query->pluck('value', 'key')->toArray();
     }
 
     /**
@@ -41,79 +35,62 @@ class ThemeOptionRepository extends EloquentBaseRepository implements ThemeOptio
      */
     public function getOptionsByThemeAlias($alias)
     {
-        $result = [];
         $query = $this->model
             ->join('themes', 'theme_options.theme_id', '=', 'themes.id')
             ->where('themes.alias', '=', $alias)
             ->select('theme_options.key', 'theme_options.value')
             ->get();
-        foreach ($query as $item) {
-            $result[$item->key] = $item->value;
-        }
-        return $result;
+        return $query->pluck('value', 'key')->toArray();
     }
 
     /**
      * @param array $options
-     * @return array|bool
+     * @return bool
      */
     public function updateOptions($options = [])
     {
         foreach ($options as $key => $row) {
             $result = $this->updateOption($key, $row);
-            if ($result['error']) {
+            if (!$result) {
                 return $result;
             }
         }
-        return response_with_messages('Options updated', false, \Constants::SUCCESS_NO_CONTENT_CODE);
+        return true;
     }
 
     /**
      * @param $key
      * @param $value
-     * @return array
+     * @return bool
      */
     public function updateOption($key, $value)
     {
-        $currentTheme = cms_theme_options()->getCurrentTheme();
-        if (!$currentTheme) {
-            return response_with_messages('No theme activated!!!', true, \Constants::ERROR_CODE);
+        if (!$this->currentTheme) {
+            $this->currentTheme = cms_theme_options()->getCurrentTheme();
         }
 
-        $allowCreateNew = true;
-        $justUpdateSomeFields = false;
+        if (!$this->currentTheme) {
+            return false;
+        }
 
-        /**
-         * Parse everything to string
-         */
-        $value = (string)$value;
-
-        $option = $this
+        $option = $this->model
             ->where([
                 'key' => $key,
-                'theme_id' => array_get($currentTheme, 'id'),
+                'theme_id' => array_get($this->currentTheme, 'id'),
             ])
             ->select(['id', 'key', 'value'])
             ->first();
 
-        if ($option) {
-            $allowCreateNew = false;
-            $justUpdateSomeFields = true;
-        }
-
-        $result = $this->editWithValidate($option, [
+        $result = $this->createOrUpdate($option, [
             'key' => $key,
             'value' => $value,
-            'theme_id' => array_get($currentTheme, 'id'),
-        ], $allowCreateNew, $justUpdateSomeFields);
+            'theme_id' => array_get($this->currentTheme, 'id'),
+        ]);
 
-        if ($result['error']) {
-            return response_with_messages($result['messages'], true, \Constants::ERROR_CODE, [
-                'key' => $key,
-                'value' => $value
-            ]);
+        if (!$result) {
+            return false;
         }
 
-        return response_with_messages('Options updated', false, \Constants::SUCCESS_NO_CONTENT_CODE);
+        return true;
     }
 }

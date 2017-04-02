@@ -10,28 +10,33 @@ class ThemeOptionsSupport
     /**
      * @var array
      */
-    private $groups = [
-        'basic' => [
-            'title' => 'Basic',
-            'priority' => 1,
-            'items' => [],
-        ],
-    ];
+    protected $groups;
 
     /**
      * @var mixed
      */
-    private $currentTheme;
+    protected $currentTheme;
 
-    private $options;
+    /**
+     * @var array|string
+     */
+    protected $options;
 
     /**
      * @var int
      */
-    private $optionsCount = 0;
+    protected $optionsCount = 0;
 
     public function __construct()
     {
+        $this->groups = [
+            'basic' => [
+                'title' => trans('webed-core::base.setting_group.basic'),
+                'priority' => 1,
+                'items' => [],
+            ],
+        ];
+        
         $this->currentTheme = get_current_theme();
 
         if ($this->currentTheme) {

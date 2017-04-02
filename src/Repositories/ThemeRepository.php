@@ -9,14 +9,6 @@ class ThemeRepository extends EloquentBaseRepository implements ThemeRepositoryC
 {
     use Cacheable;
 
-    protected $rules = [
-
-    ];
-
-    protected $editableFields = [
-        '*',
-    ];
-
     /**
      * @param $alias
      * @return mixed

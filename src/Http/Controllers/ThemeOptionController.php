@@ -17,8 +17,12 @@ class ThemeOptionController extends BaseAdminController
 
         $this->repository = $repository;
 
-        $this->getDashboardMenu('webed-theme-options');
-        $this->breadcrumbs->addLink('Theme options');
+        $this->middleware(function ($request, $next) {
+            $this->getDashboardMenu('webed-theme-options');
+            $this->breadcrumbs->addLink(trans('webed-themes-management::base.theme_options'));
+
+            return $next($request);
+        });
     }
 
     /**
@@ -26,9 +30,9 @@ class ThemeOptionController extends BaseAdminController
      */
     public function getIndex()
     {
-        $this->setPageTitle('Theme options');
+        $this->setPageTitle(trans('webed-themes-management::base.theme_options'));
 
-        return do_filter('theme-options.index.get', $this)->viewAdmin('theme-options-index');
+        return do_filter(BASE_FILTER_CONTROLLER, $this, WEBED_THEME_OPTIONS, 'index.get')->viewAdmin('theme-options-index');
     }
 
     public function postIndex()
@@ -45,13 +49,14 @@ class ThemeOptionController extends BaseAdminController
 
         $result = $this->repository->updateOptions($data);
 
-        $msgType = $result['error'] ? 'danger' : 'success';
+        $msgType = !$result ? 'danger' : 'success';
+        $msg = $result ? trans('webed-core::base.form.request_completed') : trans('webed-core::base.form.error_occurred');
 
         flash_messages()
-            ->addMessages($result['messages'], $msgType)
+            ->addMessages($msg, $msgType)
             ->showMessagesOnSession();
 
-        do_action('theme-options.after-edit.post', $result, $this);
+        do_action(BASE_ACTION_AFTER_UPDATE, WEBED_THEME_OPTIONS, $data, $result);
 
         return redirect()->back();
     }

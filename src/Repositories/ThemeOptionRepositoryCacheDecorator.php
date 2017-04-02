@@ -25,7 +25,7 @@ class ThemeOptionRepositoryCacheDecorator extends EloquentBaseRepositoryCacheDec
 
     /**
      * @param array $options
-     * @return array|bool
+     * @return bool
      */
     public function updateOptions($options = [])
     {
@@ -35,7 +35,7 @@ class ThemeOptionRepositoryCacheDecorator extends EloquentBaseRepositoryCacheDec
     /**
      * @param $key
      * @param $value
-     * @return array
+     * @return bool
      */
     public function updateOption($key, $value)
     {

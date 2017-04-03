@@ -13,6 +13,7 @@ return [
     'themes' => 'Themes',
     'themes_list' => 'Themes list',
     'theme_options' => 'Theme options',
+    'current_theme' => 'Current theme',
 
     'theme_not_exists' => 'Theme not exists',
     'theme_not_found' => 'Theme not found: ',

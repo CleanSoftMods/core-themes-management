@@ -13,6 +13,7 @@ return [
     'themes' => 'Giao diện',
     'themes_list' => 'Danh sách giao diện',
     'theme_options' => 'Tùy chỉnh giao diện',
+    'current_theme' => 'Giao diện hiện tại',
 
     'theme_not_exists' => 'Giao diện không tồn tại',
     'theme_not_found' => 'Giao diện này chưa tồn tại: ',

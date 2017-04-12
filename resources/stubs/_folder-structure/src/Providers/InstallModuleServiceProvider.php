@@ -28,7 +28,7 @@ class InstallModuleServiceProvider extends ServiceProvider
 
     }
 
-    private function booted()
+    protected function booted()
     {
         //acl_permission()
         //->registerPermission('Permission 1 description', 'description-1', $this->module)

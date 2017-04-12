@@ -28,7 +28,7 @@ class BootstrapModuleServiceProvider extends ServiceProvider
 
     }
 
-    private function booted()
+    protected function booted()
     {
         /**
          * Register to dashboard menu

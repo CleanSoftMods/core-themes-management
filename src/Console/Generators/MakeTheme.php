@@ -53,7 +53,7 @@ class MakeTheme extends Command
         $this->step1();
     }
 
-    private function step1()
+    protected function step1()
     {
         $this->themeFolderName = str_slug($this->ask('Theme folder name:', $this->container['alias']));
         $this->container['name'] = $this->ask('Name of theme:', 'WebEd ' . $this->container['alias']);
@@ -67,14 +67,14 @@ class MakeTheme extends Command
         $this->step2();
     }
 
-    private function step2()
+    protected function step2()
     {
         $this->generatingTheme();
 
         $this->info("\nYour theme generated successfully.");
     }
 
-    private function generatingTheme()
+    protected function generatingTheme()
     {
         $directory = webed_themes_path($this->themeFolderName);
 

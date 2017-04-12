@@ -28,7 +28,7 @@ class UninstallModuleServiceProvider extends ServiceProvider
 
     }
 
-    private function booted()
+    protected function booted()
     {
         //acl_permission()
         //    ->unsetPermission('Permission 1 description', 'description-1', $this->module);

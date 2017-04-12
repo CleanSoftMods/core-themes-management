@@ -3,13 +3,13 @@
 use WebEd\Base\Models\Contracts\BaseModelContract;
 use WebEd\Base\Repositories\Eloquent\EloquentBaseRepository;
 
-use DummyNamespace\Contracts\DummyClassContract;
+use DummyNamespace\Contracts\DummyClassRepositoryContract;
 
-class DummyClass extends EloquentBaseRepository implements DummyClassContract
+class DummyClassRepository extends EloquentBaseRepository implements DummyClassRepositoryContract
 {
     /**
      * @param array $data
-     * @return array
+     * @return int
      */
     public function createDummyClass(array $data)
     {
@@ -19,7 +19,7 @@ class DummyClass extends EloquentBaseRepository implements DummyClassContract
     /**
      * @param int|null|BaseModelContract $id
      * @param array $data
-     * @return array
+     * @return int
      */
     public function createOrUpdateDummyClass($id, array $data)
     {
@@ -29,7 +29,7 @@ class DummyClass extends EloquentBaseRepository implements DummyClassContract
     /**
      * @param int|null|BaseModelContract $id
      * @param array $data
-     * @return array
+     * @return int
      */
     public function updateDummyClass($id, array $data)
     {
@@ -38,7 +38,7 @@ class DummyClass extends EloquentBaseRepository implements DummyClassContract
 
     /**
      * @param int|BaseModelContract|array $id
-     * @return array
+     * @return bool
      */
     public function deleteDummyClass($id)
     {

@@ -28,7 +28,7 @@ class InstallModuleServiceProvider extends ServiceProvider
 
     }
 
-    private function booted()
+    protected function booted()
     {
         /**
          * Now, just super admin can modify themes

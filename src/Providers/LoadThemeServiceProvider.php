@@ -37,7 +37,7 @@ class LoadThemeServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    private function booted()
+    protected function booted()
     {
         $this->currentTheme = get_current_theme();
         if(!$this->currentTheme) {

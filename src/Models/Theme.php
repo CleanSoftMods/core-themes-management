@@ -9,7 +9,12 @@ class Theme extends BaseModel implements ThemeModelContract
 
     protected $primaryKey = 'id';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'alias',
+        'enabled',
+        'installed',
+        'installed_version',
+    ];
 
     public $timestamps = false;
 

@@ -9,7 +9,11 @@ class ThemeOption extends BaseModel implements ThemeOptionModelContract
 
     protected $primaryKey = 'id';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'theme_id',
+        'key',
+        'value'
+    ];
 
     public $timestamps = false;
 

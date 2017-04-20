@@ -12,13 +12,13 @@ if (!function_exists('cms_theme_options')) {
     }
 }
 
-if (!function_exists('get_theme_options')) {
+if (!function_exists('get_theme_option')) {
     /**
      * @param null $key
      * @param null $default
      * @return array|string
      */
-    function get_theme_options($key = null, $default = null)
+    function get_theme_option($key = null, $default = null)
     {
         return ThemeOptionsSupportFacade::getOption($key, $default);
     }

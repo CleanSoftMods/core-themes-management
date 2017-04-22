@@ -22,7 +22,7 @@ class BootstrapModuleMiddleware
         /**
          * Register to dashboard menu
          */
-        \DashboardMenu::registerItem([
+        dashboard_menu()->registerItem([
             'id' => 'webed-themes-management',
             'priority' => 1002,
             'parent_id' => null,
@@ -33,7 +33,7 @@ class BootstrapModuleMiddleware
             'css_class' => null,
             'permissions' => ['view-themes'],
         ]);
-        \DashboardMenu::registerItem([
+        dashboard_menu()->registerItem([
             'id' => 'webed-theme-options',
             'priority' => 1002,
             'parent_id' => null,

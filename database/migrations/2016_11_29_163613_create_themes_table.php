@@ -25,7 +25,7 @@ class CreateThemesTable extends Migration
             $table->increments('id');
             $table->integer('theme_id', false)->unsigned();
             $table->string('key', 100);
-            $table->text('value');
+            $table->text('value')->nullable();
 
             $table->unique(['theme_id', 'key']);
 

@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
 
 class SetThemeOptionToNullable extends Migration
 {
@@ -14,7 +13,9 @@ class SetThemeOptionToNullable extends Migration
      */
     public function up()
     {
-        DB::statement('ALTER TABLE theme_options MODIFY value TEXT NULL');
+        Schema::table('theme_options', function (Blueprint $table) {
+            $table->text('value')->nullable()->change();
+        });
     }
 
     /**
@@ -24,6 +25,8 @@ class SetThemeOptionToNullable extends Migration
      */
     public function down()
     {
-        DB::statement('ALTER TABLE theme_options MODIFY value TEXT NOT NULL');
+        Schema::table('theme_options', function (Blueprint $table) {
+            $table->text('value')->change();
+        });
     }
 }

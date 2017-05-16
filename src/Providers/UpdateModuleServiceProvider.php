@@ -25,13 +25,13 @@ class UpdateModuleServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        register_module_update_batches('webed-themes-management', [
+        register_module_update_batches($this->module, [
 
-        ]);
+        ], 'core');
     }
 
     protected function booted()
     {
-        load_module_update_batches('webed-themes-management');
+        load_module_update_batches($this->module, 'core');
     }
 }

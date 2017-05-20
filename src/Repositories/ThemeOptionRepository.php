@@ -1,15 +1,10 @@
 <?php namespace WebEd\Base\ThemesManagement\Repositories;
 
-use WebEd\Base\Caching\Services\Traits\Cacheable;
-use WebEd\Base\Models\Contracts\BaseModelContract;
 use WebEd\Base\Repositories\Eloquent\EloquentBaseRepository;
-use WebEd\Base\Caching\Services\Contracts\CacheableContract;
 use WebEd\Base\ThemesManagement\Repositories\Contracts\ThemeOptionRepositoryContract;
 
-class ThemeOptionRepository extends EloquentBaseRepository implements ThemeOptionRepositoryContract, CacheableContract
+class ThemeOptionRepository extends EloquentBaseRepository implements ThemeOptionRepositoryContract
 {
-    use Cacheable;
-
     /**
      * @var mixed|null
      */

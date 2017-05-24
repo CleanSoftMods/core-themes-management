@@ -50,6 +50,9 @@ class PageController extends AbstractController
      */
     protected function defaultTemplate()
     {
+        if(view()->exists($this->currentThemeName . '::front.page-templates.' . str_slug($this->page->page_template))) {
+            return $this->view('front.page-templates.' . str_slug($this->page->page_template));
+        }
         return $this->view('front.page-templates.default');
     }
 

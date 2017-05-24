@@ -47,6 +47,10 @@ class CategoryController extends AbstractController
     {
         $this->dis['relatedPosts'] = get_posts_by_category($this->category->id);
 
+        if(view()->exists($this->currentThemeName . '::front.category-templates.' . str_slug($this->category->page_template))) {
+            return $this->view('front.category-templates.' . str_slug($this->category->page_template));
+        }
+
         return $this->view('front.category-templates.default');
     }
 }

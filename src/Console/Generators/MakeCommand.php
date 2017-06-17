@@ -29,6 +29,6 @@ class MakeCommand extends AbstractGenerator
 
     protected function getDefaultNamespace($rootNamespace)
     {
-        return 'Console\\Commands\\' . $this->argument('name');
+        return 'Console\\Commands\\' . $this->argument('name') . 'Command';
     }
 }

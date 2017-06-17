@@ -42,6 +42,8 @@ class ConsoleServiceProvider extends ServiceProvider
             \WebEd\Base\ThemesManagement\Console\Generators\MakeRequest::class,
             \WebEd\Base\ThemesManagement\Console\Generators\MakeService::class,
             \WebEd\Base\ThemesManagement\Console\Generators\MakeSupport::class,
+            \WebEd\Base\ThemesManagement\Console\Generators\MakeMail::class,
+            \WebEd\Base\ThemesManagement\Console\Generators\MakeAction::class,
         ]);
     }
 

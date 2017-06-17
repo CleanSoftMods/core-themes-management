@@ -29,6 +29,6 @@ class MakeAction extends AbstractGenerator
 
     protected function getDefaultNamespace($rootNamespace)
     {
-        return 'Actions\\' . $this->argument('name');
+        return 'Actions\\' . $this->argument('name') . 'ServerAction';
     }
 }

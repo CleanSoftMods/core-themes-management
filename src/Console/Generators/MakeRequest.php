@@ -29,6 +29,6 @@ class MakeRequest extends AbstractGenerator
 
     protected function getDefaultNamespace($rootNamespace)
     {
-        return 'Http\\Requests\\' . $this->argument('name');
+        return 'Http\\Requests\\' . $this->argument('name') . 'Request';
     }
 }

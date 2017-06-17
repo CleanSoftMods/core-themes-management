@@ -29,6 +29,6 @@ class MakeMiddleware extends AbstractGenerator
 
     protected function getDefaultNamespace($rootNamespace)
     {
-        return 'Http\\Middleware\\' . $this->argument('name');
+        return 'Http\\Middleware\\' . $this->argument('name') . 'Middleware';
     }
 }

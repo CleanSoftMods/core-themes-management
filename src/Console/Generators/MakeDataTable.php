@@ -29,6 +29,6 @@ class MakeDataTable extends AbstractGenerator
 
     protected function getDefaultNamespace($rootNamespace)
     {
-        return 'Http\\DataTables\\' . $this->argument('name');
+        return 'Http\\DataTables\\' . $this->argument('name') . 'DataTable';
     }
 }

@@ -29,6 +29,6 @@ class MakeProvider extends AbstractGenerator
 
     protected function getDefaultNamespace($rootNamespace)
     {
-        return 'Providers\\' . $this->argument('name');
+        return 'Providers\\' . $this->argument('name') . 'ServiceProvider';
     }
 }

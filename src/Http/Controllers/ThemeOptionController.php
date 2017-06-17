@@ -19,7 +19,7 @@ class ThemeOptionController extends BaseAdminController
 
         $this->middleware(function ($request, $next) {
             $this->getDashboardMenu('webed-theme-options');
-            $this->breadcrumbs->addLink(trans('webed-themes-management::base.theme_options'));
+            $this->breadcrumbs->addLink(trans($this->module . '::base.theme_options'));
 
             return $next($request);
         });
@@ -30,7 +30,7 @@ class ThemeOptionController extends BaseAdminController
      */
     public function getIndex()
     {
-        $this->setPageTitle(trans('webed-themes-management::base.theme_options'));
+        $this->setPageTitle(trans($this->module . '::base.theme_options'));
 
         return do_filter(BASE_FILTER_CONTROLLER, $this, WEBED_THEME_OPTIONS, 'index.get')->viewAdmin('theme-options-index');
     }

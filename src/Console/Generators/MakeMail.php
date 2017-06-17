@@ -1,13 +1,14 @@
 <?php namespace WebEd\Base\ThemesManagement\Console\Generators;
 
-class MakeSupport extends AbstractGenerator
+class MakeMail extends AbstractGenerator
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'theme:make:support
+    protected $signature = 'theme:make:mail
+    	{alias : The alias of the module}
     	{name : The class name}';
 
     /**
@@ -15,7 +16,7 @@ class MakeSupport extends AbstractGenerator
      *
      * @var string
      */
-    protected $type = 'Support';
+    protected $type = 'Mail';
 
     /**
      * Get the stub file for the generator.
@@ -24,11 +25,11 @@ class MakeSupport extends AbstractGenerator
      */
     protected function getStub()
     {
-        return __DIR__ . '/../../../resources/stubs/support/support.stub';
+        return __DIR__ . '/../../../../resources/stubs/mails/mail.stub';
     }
 
     protected function getDefaultNamespace($rootNamespace)
     {
-        return 'Support\\' . $this->argument('name') . 'Support';
+        return 'Mails\\' . $this->argument('name') . 'Mail';
     }
 }

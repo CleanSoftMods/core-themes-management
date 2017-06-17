@@ -36,7 +36,7 @@ class BootstrapModuleMiddleware
         dashboard_menu()->registerItem([
             'id' => 'webed-theme-options',
             'priority' => 1002,
-            'parent_id' => null,
+            'parent_id' => 'webed-configuration',
             'heading' => null,
             'title' => trans('webed-themes-management::base.admin_menu.theme_options.title'),
             'font_icon' => 'icon-settings',

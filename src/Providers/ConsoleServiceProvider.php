@@ -44,6 +44,7 @@ class ConsoleServiceProvider extends ServiceProvider
             \WebEd\Base\ThemesManagement\Console\Generators\MakeSupport::class,
             \WebEd\Base\ThemesManagement\Console\Generators\MakeMail::class,
             \WebEd\Base\ThemesManagement\Console\Generators\MakeAction::class,
+            \WebEd\Base\ThemesManagement\Console\Generators\MakeViewComposer::class,
         ]);
     }
 

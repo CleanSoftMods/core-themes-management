@@ -1,7 +1,7 @@
 <?php namespace WebEd\Base\ThemesManagement\Support;
 
 use Illuminate\Support\Collection;
-use WebEd\Base\Settings\Repositories\Contracts\SettingContract;
+use WebEd\Base\Settings\Repositories\Contracts\SettingRepositoryContract;
 use WebEd\Base\ThemesManagement\Repositories\Contracts\ThemeOptionRepositoryContract;
 use WebEd\Base\ThemesManagement\Repositories\ThemeOptionRepository;
 
@@ -36,7 +36,7 @@ class ThemeOptionsSupport
                 'items' => [],
             ],
         ];
-        
+
         $this->currentTheme = get_current_theme();
 
         if ($this->currentTheme) {

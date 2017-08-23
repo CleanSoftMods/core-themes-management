@@ -5,7 +5,7 @@ use WebEd\Base\Models\EloquentBase as BaseModel;
 
 class ThemeOption extends BaseModel implements ThemeOptionModelContract
 {
-    protected $table = 'theme_options';
+    protected $table = 'we_theme_options';
 
     protected $primaryKey = 'id';
 

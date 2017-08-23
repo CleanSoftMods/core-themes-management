@@ -5,7 +5,7 @@ use WebEd\Base\Models\EloquentBase as BaseModel;
 
 class Theme extends BaseModel implements ThemeModelContract
 {
-    protected $table = 'themes';
+    protected $table = 'we_themes';
 
     protected $primaryKey = 'id';
 

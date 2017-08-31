@@ -1,6 +1,7 @@
 <?php namespace WebEd\Base\ThemesManagement\Console\Commands;
 
 use Illuminate\Console\Command;
+use WebEd\Base\ThemesManagement\Actions\DisableThemeAction;
 
 class DisableThemeCommand extends Command
 {
@@ -19,22 +20,20 @@ class DisableThemeCommand extends Command
     protected $description = 'Disable theme';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(DisableThemeAction $action)
     {
-        themes_management()->disableTheme($this->argument('alias'))->refreshComposerAutoload();
+        $result = $action->run($this->argument('alias'));
 
-        $this->info("Your theme disabled successfully.");
+        if($result['error']) {
+            foreach ($result['messages'] as $message) {
+                $this->error($message);
+            }
+        } else {
+            foreach ($result['messages'] as $message) {
+                $this->info($message);
+            }
+        }
     }
 }

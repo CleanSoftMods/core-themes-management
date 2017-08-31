@@ -29,23 +29,6 @@ class ConsoleServiceProvider extends ServiceProvider
     {
         $this->commands([
             \WebEd\Base\ThemesManagement\Console\Generators\MakeTheme::class,
-            \WebEd\Base\ThemesManagement\Console\Generators\MakeController::class,
-            \WebEd\Base\ThemesManagement\Console\Generators\MakeView::class,
-            \WebEd\Base\ThemesManagement\Console\Generators\MakeProvider::class,
-            \WebEd\Base\ThemesManagement\Console\Generators\MakeCommand::class,
-            \WebEd\Base\ThemesManagement\Console\Generators\MakeCriteria::class,
-            \WebEd\Base\ThemesManagement\Console\Generators\MakeDataTable::class,
-            \WebEd\Base\ThemesManagement\Console\Generators\MakeFacade::class,
-            \WebEd\Base\ThemesManagement\Console\Generators\MakeMiddleware::class,
-            \WebEd\Base\ThemesManagement\Console\Generators\MakeModel::class,
-            \WebEd\Base\ThemesManagement\Console\Generators\MakeRepository::class,
-            \WebEd\Base\ThemesManagement\Console\Generators\MakeRequest::class,
-            \WebEd\Base\ThemesManagement\Console\Generators\MakeService::class,
-            \WebEd\Base\ThemesManagement\Console\Generators\MakeSupport::class,
-            \WebEd\Base\ThemesManagement\Console\Generators\MakeMail::class,
-            \WebEd\Base\ThemesManagement\Console\Generators\MakeAction::class,
-            \WebEd\Base\ThemesManagement\Console\Generators\MakeViewComposer::class,
-            \WebEd\Base\ThemesManagement\Console\Generators\MakeHook::class,
         ]);
     }
 

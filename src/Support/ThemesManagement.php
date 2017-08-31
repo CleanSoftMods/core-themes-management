@@ -1,5 +1,6 @@
 <?php namespace WebEd\Base\ThemesManagement\Support;
 
+use Illuminate\Support\Facades\File;
 use WebEd\Base\Http\Controllers\BaseFrontController;
 use WebEd\Base\ThemesManagement\Facades\ThemesFacade;
 
@@ -103,7 +104,7 @@ class ThemesManagement
         /**
          * Composer information
          */
-        $composerContent = json_decode(\File::get(base_path('composer.json')), true);
+        $composerContent = json_decode(File::get(base_path('composer.json')), true);
         $autoload = array_get($composerContent, 'autoload', []);
 
         if (!array_get($autoload, $moduleAutoloadType)) {
@@ -126,14 +127,9 @@ class ThemesManagement
         /**
          * Save file
          */
-        \File::put(base_path('composer.json'), json_encode_prettify($composerContent));
+        File::put(base_path('composer.json'), json_encode_prettify($composerContent));
 
         return $this;
-    }
-
-    public function refreshComposerAutoload()
-    {
-        return modules_management()->refreshComposerAutoload();
     }
 
     /**

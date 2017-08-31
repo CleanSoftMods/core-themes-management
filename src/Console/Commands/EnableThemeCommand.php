@@ -1,6 +1,7 @@
 <?php namespace WebEd\Base\ThemesManagement\Console\Commands;
 
 use Illuminate\Console\Command;
+use WebEd\Base\ThemesManagement\Actions\EnableThemeAction;
 
 class EnableThemeCommand extends Command
 {
@@ -19,41 +20,20 @@ class EnableThemeCommand extends Command
     protected $description = 'Enable theme';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(EnableThemeAction $action)
     {
-        $theme = get_theme_information($this->argument('alias'));
-        if (!$theme) {
-            $this->error('Theme not exists');
-            die();
-        }
+        $result = $action->run($this->argument('alias'));
 
-        $this->detectRequiredDependencies($theme);
-
-        themes_management()->enableTheme($this->argument('alias'))->refreshComposerAutoload();
-
-        $this->info("Your theme enabled successfully.");
-    }
-
-    protected function detectRequiredDependencies($theme)
-    {
-        $checkRelatedModules = check_module_require($theme);
-        if ($checkRelatedModules['error']) {
-            foreach ($checkRelatedModules['messages'] as $message) {
+        if($result['error']) {
+            foreach ($result['messages'] as $message) {
                 $this->error($message);
             }
-            die();
+        } else {
+            foreach ($result['messages'] as $message) {
+                $this->info($message);
+            }
         }
     }
 }

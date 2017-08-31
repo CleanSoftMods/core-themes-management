@@ -1,7 +1,7 @@
 <?php namespace WebEd\Base\ThemesManagement\Http\DataTables;
 
+use Illuminate\Support\Facades\File;
 use WebEd\Base\Http\DataTables\AbstractDataTables;
-use WebEd\Base\ThemesManagement\Facades\ThemesFacade;
 use Yajra\Datatables\Engines\CollectionEngine;
 use Yajra\Datatables\Engines\EloquentEngine;
 use Yajra\Datatables\Engines\QueryBuilderEngine;
@@ -12,7 +12,7 @@ class ThemesListDataTable extends AbstractDataTables
 
     public function __construct()
     {
-        $this->repository = ThemesFacade::getAllThemes(false);
+        $this->repository = get_all_theme_information(false);
     }
 
     /**
@@ -79,10 +79,10 @@ class ThemesListDataTable extends AbstractDataTables
             ->addColumn('thumbnail', function ($item) {
                 $themeFolder = get_base_folder($item['file']);
                 $themeThumbnail = $themeFolder . 'theme.jpg';
-                if (!\File::exists($themeThumbnail)) {
+                if (!File::exists($themeThumbnail)) {
                     $themeThumbnail = webed_themes_path('default-thumbnail.jpg');
                 }
-                $imageData = base64_encode(\File::get($themeThumbnail));
+                $imageData = base64_encode(File::get($themeThumbnail));
                 $src = 'data: ' . mime_content_type($themeThumbnail) . ';base64,' . $imageData;
                 return '<img src="' . $src . '" alt="' . array_get($item, 'alias') . '" width="240" height="180" class="theme-thumbnail">';
             })

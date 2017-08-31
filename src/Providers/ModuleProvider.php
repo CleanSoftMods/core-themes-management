@@ -25,10 +25,6 @@ class ModuleProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../resources/lang' => base_path('resources/lang/vendor/webed-themes-management'),
         ], 'lang');
-
-        app()->booted(function () {
-            $this->app->register(BootstrapModuleServiceProvider::class);
-        });
     }
 
     /**
@@ -41,14 +37,11 @@ class ModuleProvider extends ServiceProvider
         //Load helpers
         load_module_helpers(__DIR__);
 
-        $aliasLoader = AliasLoader::getInstance();
-        $aliasLoader->alias('ThemesManagement', ThemesManagementFacade::class);
-        $aliasLoader->alias('ThemeOptions', ThemeOptionsSupportFacade::class);
-
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(RepositoryServiceProvider::class);
         $this->app->register(ConsoleServiceProvider::class);
         $this->app->register(LoadThemeServiceProvider::class);
         $this->app->register(HookServiceProvider::class);
+        $this->app->register(BootstrapModuleServiceProvider::class);
     }
 }

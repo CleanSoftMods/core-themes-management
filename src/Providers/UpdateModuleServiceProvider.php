@@ -4,19 +4,7 @@ use Illuminate\Support\ServiceProvider;
 
 class UpdateModuleServiceProvider extends ServiceProvider
 {
-    protected $module = 'webed-themes-management';
-
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        app()->booted(function () {
-            $this->booted();
-        });
-    }
+    protected $module = WEBED_THEMES_MANAGEMENT;
 
     /**
      * Register any application services.
@@ -28,10 +16,7 @@ class UpdateModuleServiceProvider extends ServiceProvider
         register_module_update_batches($this->module, [
 
         ], 'core');
-    }
 
-    protected function booted()
-    {
         load_module_update_batches($this->module, 'core');
     }
 }

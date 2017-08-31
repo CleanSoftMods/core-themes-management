@@ -1,6 +1,7 @@
 <?php namespace WebEd\Base\ThemesManagement\Support;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Schema;
 use WebEd\Base\ThemesManagement\Repositories\Contracts\ThemeRepositoryContract;
 use WebEd\Base\ThemesManagement\Repositories\ThemeRepository;
 
@@ -17,13 +18,31 @@ class Themes
     protected $themesCollection;
 
     /**
+     * @var Collection
+     */
+    protected $themesInDb;
+
+    /**
      * @var ThemeRepository
      */
     protected $themeRepository;
 
+    /**
+     * @var bool
+     */
+    protected $canAccessDb = false;
+
     public function __construct(ThemeRepositoryContract $themeRepository)
     {
         $this->themeRepository = $themeRepository;
+
+        $this->canAccessDb = $this->checkConnection();
+
+        if ($this->canAccessDb) {
+            if (!$this->themesInDb) {
+                $this->themesInDb = $this->themeRepository->get();
+            }
+        }
     }
 
     /**
@@ -41,22 +60,6 @@ class Themes
 
         $modulesArr = [];
 
-        $canAccessDB = true;
-        if (app()->runningInConsole()) {
-            if (!check_db_connection() || !\Schema::hasTable('themes')) {
-                $canAccessDB = false;
-            }
-        }
-
-        /**
-         * @var ThemeRepository $themeRepo
-         */
-        $themeRepo = app(ThemeRepositoryContract::class);
-
-        if ($canAccessDB) {
-            $themes = $themeRepo->get();
-        }
-
         $modules = get_folders_in_path(webed_themes_path());
 
         foreach ($modules as $row) {
@@ -66,11 +69,11 @@ class Themes
                 continue;
             }
 
-            if ($canAccessDB) {
-                $theme = $themes->where('alias', '=', array_get($data, 'alias'))->first();
+            if ($this->canAccessDb) {
+                $theme = $this->themesInDb->where('alias', '=', array_get($data, 'alias'))->first();
 
                 if (!$theme) {
-                    $result = $themeRepo
+                    $result = $this->themeRepository
                         ->create([
                             'alias' => array_get($data, 'alias'),
                             'enabled' => false,
@@ -80,7 +83,8 @@ class Themes
                      * Everything ok
                      */
                     if ($result) {
-                        $theme = $themeRepo->find($result);
+                        $theme = $this->themeRepository->find($result);
+                        $this->themesInDb->push($theme);
                     }
                 }
 
@@ -158,5 +162,18 @@ class Themes
             ]));
 
         return $result;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function checkConnection()
+    {
+        if (app()->runningInConsole()) {
+            if (!check_db_connection() || !Schema::hasTable(webed_db_prefix() . 'themes')) {
+                return false;
+            }
+        }
+        return true;
     }
 }

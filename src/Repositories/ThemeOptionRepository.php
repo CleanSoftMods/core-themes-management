@@ -17,9 +17,9 @@ class ThemeOptionRepository extends EloquentBaseRepository implements ThemeOptio
     public function getOptionsByThemeId($id)
     {
         $query = $this->model
-            ->join('themes', 'theme_options.theme_id', '=', 'themes.id')
-            ->where('themes.id', '=', $id)
-            ->select('theme_options.key', 'theme_options.value')
+            ->join(webed_db_prefix() . 'themes', webed_db_prefix() . 'theme_options.theme_id', '=', webed_db_prefix() . 'themes.id')
+            ->where(webed_db_prefix() . 'themes.id', '=', $id)
+            ->select(webed_db_prefix() . 'theme_options.key', webed_db_prefix() . 'theme_options.value')
             ->get();
         return $query->pluck('value', 'key')->toArray();
     }
@@ -31,9 +31,9 @@ class ThemeOptionRepository extends EloquentBaseRepository implements ThemeOptio
     public function getOptionsByThemeAlias($alias)
     {
         $query = $this->model
-            ->join('themes', 'theme_options.theme_id', '=', 'themes.id')
-            ->where('themes.alias', '=', $alias)
-            ->select('theme_options.key', 'theme_options.value')
+            ->join(webed_db_prefix() . 'themes', webed_db_prefix() . 'theme_options.theme_id', '=', webed_db_prefix() . 'themes.id')
+            ->where(webed_db_prefix() . 'themes.alias', '=', $alias)
+            ->select(webed_db_prefix() . 'theme_options.key', webed_db_prefix() . 'theme_options.value')
             ->get();
         return $query->pluck('value', 'key')->toArray();
     }

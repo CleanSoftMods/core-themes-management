@@ -1,6 +1,7 @@
 <?php namespace WebEd\Base\ThemesManagement\Console\Commands;
 
 use Illuminate\Console\Command;
+use WebEd\Base\ThemesManagement\Actions\UninstallThemeAction;
 
 class UninstallThemeCommand extends Command
 {
@@ -19,59 +20,20 @@ class UninstallThemeCommand extends Command
     protected $description = 'Uninstall WebEd theme';
 
     /**
-     * @var array
-     */
-    protected $container = [];
-
-    /**
-     * @var array
-     */
-    protected $dbInfo = [];
-
-    /**
-     * @var \Illuminate\Foundation\Application|mixed
-     */
-    protected $app;
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->app = app();
-    }
-
-    /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(UninstallThemeAction $action)
     {
-        $theme = get_theme_information($this->argument('alias'));
-        if (!$theme) {
-            $this->error('Theme not exists');
-            die();
+        $result = $action->run($this->argument('alias'));
+
+        if($result['error']) {
+            foreach ($result['messages'] as $message) {
+                $this->error($message);
+            }
+        } else {
+            foreach ($result['messages'] as $message) {
+                $this->info($message);
+            }
         }
-
-        $this->line('Uninstall module dependencies...');
-        $this->registerUninstallModuleService($theme);
-
-        $this->info("\nTheme " . $this->argument('alias') . " uninstalled.");
-    }
-
-    protected function registerUninstallModuleService($theme)
-    {
-        $namespace = str_replace('\\\\', '\\', array_get($theme, 'namespace', '') . '\Providers\UninstallModuleServiceProvider');
-        if (class_exists($namespace)) {
-            $this->app->register($namespace);
-        }
-        save_theme_information($theme, [
-            'installed' => false,
-            'installed_version' => '',
-        ]);
-        $this->line('Uninstalled');
     }
 }

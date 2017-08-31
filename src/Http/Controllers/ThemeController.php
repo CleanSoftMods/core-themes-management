@@ -2,22 +2,16 @@
 
 use WebEd\Base\Http\Controllers\BaseAdminController;
 use Illuminate\Support\Facades\Artisan;
+use WebEd\Base\ThemesManagement\Actions\DisableThemeAction;
+use WebEd\Base\ThemesManagement\Actions\EnableThemeAction;
+use WebEd\Base\ThemesManagement\Actions\InstallThemeAction;
+use WebEd\Base\ThemesManagement\Actions\UninstallThemeAction;
+use WebEd\Base\ThemesManagement\Actions\UpdateThemeAction;
 use WebEd\Base\ThemesManagement\Http\DataTables\ThemesListDataTable;
 
 class ThemeController extends BaseAdminController
 {
-    protected $module = 'webed-themes-management';
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->middleware(function ($request, $next) {
-            $this->getDashboardMenu($this->module);
-
-            return $next($request);
-        });
-    }
+    protected $module = WEBED_THEMES_MANAGEMENT;
 
     /**
      * Get index page
@@ -25,6 +19,8 @@ class ThemeController extends BaseAdminController
      */
     public function getIndex(ThemesListDataTable $themesListDataTable)
     {
+        $this->getDashboardMenu($this->module);
+
         $this->breadcrumbs->addLink(trans($this->module . '::base.themes'));
         $this->setPageTitle(trans($this->module . '::base.themes'));
 
@@ -40,85 +36,60 @@ class ThemeController extends BaseAdminController
      */
     public function postListing(ThemesListDataTable $themesListDataTable)
     {
-        return do_filter('datatables.webed-themes-management.index.post', $themesListDataTable, $this);
+        return do_filter(BASE_FILTER_CONTROLLER, $themesListDataTable, WEBED_THEMES_MANAGEMENT, 'index.post', $this);
     }
 
+    /**
+     * @param $alias
+     * @param $status
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function postChangeStatus($alias, $status)
     {
-        $theme = get_theme_information($alias);
-
-        if (!$theme) {
-            return response_with_messages(trans($this->module . '::base.theme_not_exists'), true, \Constants::ERROR_CODE);
+        switch ((bool)$status) {
+            case true:
+                $result = app(EnableThemeAction::class)->run($alias);
+                break;
+            default:
+                $result = app(DisableThemeAction::class)->run($alias);
+                break;
         }
-
-        if (!$status) {
-            return themes_management()->disableTheme($alias)->refreshComposerAutoload();
-        } else {
-            $check = check_module_require($theme);
-            if ($check['error']) {
-                return $check;
-            }
-            return themes_management()->enableTheme($alias)->refreshComposerAutoload();
-        }
+        return response()->json($result, $result['response_code']);
     }
 
-    public function postInstall($alias)
+    /**
+     * @param InstallThemeAction $action
+     * @param $alias
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function postInstall(InstallThemeAction $action, $alias)
     {
-        $theme = get_theme_information($alias);
+        $result = $action->run($alias);
 
-        if (!$theme) {
-            return response_with_messages(trans($this->module . '::base.theme_not_exists'), true, \Constants::ERROR_CODE);
-        }
-
-        $check = check_module_require($theme);
-        if ($check['error']) {
-            return $check;
-        }
-
-        Artisan::call('theme:install', [
-            'alias' => $alias
-        ]);
-
-        return response_with_messages(trans($this->module . '::base.theme_installed'));
+        return response()->json($result, $result['response_code']);
     }
 
-    public function postUpdate($alias)
+    /**
+     * @param UpdateThemeAction $action
+     * @param $alias
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function postUpdate(UpdateThemeAction $action, $alias)
     {
-        $theme = get_theme_information($alias);
+        $result = $action->run($alias);
 
-        if (!$theme) {
-            return response_with_messages(trans($this->module . '::base.theme_not_exists'), true, \Constants::ERROR_CODE);
-        }
-
-        $check = check_module_require($theme);
-        if ($check['error']) {
-            return $check;
-        }
-
-        Artisan::call('theme:update', [
-            'alias' => $alias
-        ]);
-
-        return response_with_messages(trans($this->module . '::base.theme_updated'));
+        return response()->json($result, $result['response_code']);
     }
 
-    public function postUninstall($alias)
+    /**
+     * @param UninstallThemeAction $action
+     * @param $alias
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function postUninstall(UninstallThemeAction $action, $alias)
     {
-        $theme = get_theme_information($alias);
+        $result = $action->run($alias);
 
-        if (!$theme) {
-            return response_with_messages(trans($this->module . '::base.theme_not_exists'), true, \Constants::ERROR_CODE);
-        }
-
-        $check = check_module_require($theme);
-        if ($check['error']) {
-            return $check;
-        }
-
-        Artisan::call('theme:uninstall', [
-            'alias' => $alias
-        ]);
-
-        return response_with_messages(trans($this->module . '::base.theme_uninstalled'));
+        return response()->json($result, $result['response_code']);
     }
 }
